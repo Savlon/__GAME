@@ -13,7 +13,7 @@ public class Player : Mob
 
 		if (Input.GetMouseButton (1))
 		{
-			_level.SetTile (mousePosition.x, mousePosition.y, TileDatabase.Clone (TileDatabase.GRASS, mousePosition), 0);
+			_level.SetTile (mousePosition.x, mousePosition.y, TileDatabase.Clone (TileDatabase.SAND, mousePosition), 0);
 		}
 		else if (Input.GetMouseButton (0))
 		{
