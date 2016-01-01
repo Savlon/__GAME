@@ -3,5 +3,6 @@ using System.Collections;
 
 public class Item
 {
+	public string hello;
 
 }
