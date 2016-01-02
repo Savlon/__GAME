@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Entity.cs" />
      <Compile Include="Assets\Scripts\Grass.cs" />
      <Compile Include="Assets\Scripts\Hole.cs" />
+     <Compile Include="Assets\Scripts\Instrument.cs" />
      <Compile Include="Assets\Scripts\Item.cs" />
      <Compile Include="Assets\Scripts\Level.cs" />
      <Compile Include="Assets\Scripts\Mob.cs" />
