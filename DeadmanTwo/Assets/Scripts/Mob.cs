@@ -31,6 +31,16 @@ public class Mob : Entity
 		{
 			_direction = Direction.NONE;
 		}
+
+		//TODO: CLEAN THIS UP
+		if (Mathf.Abs (x) > 0 || Mathf.Abs (y) > 0)
+		{
+			GetComponent <Animator> ().SetBool ("Walk", true);
+		}
+		else
+			GetComponent <Animator> ().SetBool ("Walk", false);
+
+
 		base.Move (x, y);
 	}
 
