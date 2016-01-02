@@ -5,7 +5,10 @@ public class Entity : MonoBehaviour
 {
 	private Transform _transform;
 	private bool _remove;
-	private float _speed = 4f;
+	private float _speed;
+
+	private int _health;
+	private int _maxHealth;
 
 	public Level _level;
 
@@ -19,6 +22,8 @@ public class Entity : MonoBehaviour
 		_speed = 1f;
 		_remove = false;
 		_level = level;
+		_maxHealth = 1;
+		_health = _maxHealth;
 	}
 
 	protected virtual void Start () 
@@ -41,6 +46,24 @@ public class Entity : MonoBehaviour
 		int yPos = Mathf.FloorToInt (Position.y);
 
 		_level.GetTile (Position.x, Position.y).StepOn (_level, xPos, yPos, this);
+	}
+
+	public int Health
+	{
+		get {return _health;}
+		set {_health = value;}
+	}
+
+	public int MaxHealth
+	{
+		get {return _maxHealth;}
+		set {_maxHealth = value;}
+	}
+
+	public float Speed
+	{
+		get {return _speed;}
+		set {_speed = value;}
 	}
 
 	public bool Remove
