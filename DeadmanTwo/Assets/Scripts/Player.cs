@@ -11,10 +11,12 @@ public class Player : Mob
 		Speed = 4f;
 		Health = 90;
 		MaxHealth = 100;
-		_activeItem = ItemDatabase.SHOVEL;
+		_activeItem = ItemDatabase.GetItemFromID (ItemDatabase.SHOVEL.ID);
 
 		base.Start ();
 	}
+
+	private float timer;
 
 	protected override void Update ()
 	{
@@ -23,19 +25,34 @@ public class Player : Mob
 		Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		mousePosition.z = 0;
 
-		if (Input.GetMouseButtonDown (0))
+		if (transform.localScale.x > 0 && Camera.main.ScreenToViewportPoint (Input.mousePosition).x < 0.5f)
+		{
+			Vector3 localScale = transform.localScale;
+			localScale.x *= -1;
+			transform.localScale = localScale;
+		}
+		else if (transform.localScale.x < 0 && Camera.main.ScreenToViewportPoint (Input.mousePosition).x > 0.5f)
+		{
+			Vector3 localScale = transform.localScale;
+			localScale.x *= -1;
+			transform.localScale = localScale;
+		}
+		timer -= Time.deltaTime;
+
+		if (timer <= 0)
+			timer = 0;
+
+		if (Input.GetMouseButton (0) && timer <= 0)
 		{
 			Tile tile = _level.GetTile (mousePosition.x, mousePosition.y);
 			if (_activeItem != null)
 			{
+				timer = _activeItem.Delay;
+				PlayAnimation ();
+
 				if (_activeItem is Food)
 				{
 					_activeItem.Use (this);
-					return;
-				}
-				else if (_activeItem is Seed)
-				{
-					_activeItem.InteractOn (tile, _level, (int)mousePosition.x, (int)mousePosition.y, this);
 					return;
 				}
 				else if (_activeItem is Instrument)
@@ -55,9 +72,20 @@ public class Player : Mob
 						return;
 					}
 				}
-			}
+				else if (_activeItem is Seed)
+				{
+					_activeItem.InteractOn (tile, _level, (int)mousePosition.x, (int)mousePosition.y, this);
+					return;
+				}
 
+			}
 		}
+		else
+		{
+			transform.GetChild (1).GetComponent <Animator> ().SetBool ("Use", false);
+		}
+
+		SwapActiveItemTester ();
 
 //		if (Input.GetMouseButton (1))
 //		{
@@ -69,5 +97,56 @@ public class Player : Mob
 //		}
 		base.Update ();
 	}
+
+	public void PlayAnimation ()
+	{
+		if (_activeItem != null)
+		{
+			transform.GetChild (1).GetComponent <Animator> ().SetBool ("Use", true);
+		}
+	}
+
+	public void SetActiveItem (Item item)
+	{
+		_activeItem = item;
+		transform.GetChild (1).GetComponent <SpriteRenderer> ().sprite = _activeItem == null ? null : _activeItem.Image;
+	}
+
+	private void SwapActiveItemTester ()
+	{
+		if (Input.GetKeyDown (KeyCode.Alpha0))
+		{
+			SetActiveItem (null);
+		}
+		else if (Input.GetKeyDown (KeyCode.Alpha1))
+		{
+			SetActiveItem (ItemDatabase.GetItemFromID (ItemDatabase.items[0].ID));
+		}
+		else if (Input.GetKeyDown (KeyCode.Alpha2))
+		{
+			SetActiveItem (ItemDatabase.GetItemFromID (ItemDatabase.items[1].ID));
+		}
+		else if (Input.GetKeyDown (KeyCode.Alpha3))
+		{
+			SetActiveItem (ItemDatabase.GetItemFromID (ItemDatabase.items[2].ID));
+		}
+		else if (Input.GetKeyDown (KeyCode.Alpha4))
+		{
+			SetActiveItem (ItemDatabase.GetItemFromID (ItemDatabase.items[3].ID));
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 

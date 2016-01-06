@@ -7,13 +7,15 @@ public class Instrument : Item
 {
 	private InstrumentType _type;
 	private int _damage;
+	private int _interactiveDistance;
 	private Tile _resultTile;
 	private List<Tile> _targetTiles;
 
-	public Instrument (string name, string description, InstrumentType type, int damage, Tile resultTile, params Tile[] targetTiles) : base (name, description)
+	public Instrument (int id, string name, string description, float delay, InstrumentType type, int damage, int interactiveDistance, Tile resultTile, params Tile[] targetTiles) : base (id, name, description, delay)
 	{
 		this._type = type;
 		this._damage = damage;
+		this._interactiveDistance = interactiveDistance;
 		this._resultTile = resultTile;
 		this._targetTiles = targetTiles.ToList ();
 	}
@@ -29,10 +31,18 @@ public class Instrument : Item
 	{
 		if (_targetTiles != null && _resultTile != null)
 		{
-			if (_targetTiles.Contains (tile))
+			//TODO: FIX LOGIC FOR CHECKING WITHIN A RADIUS OF THE PLAYER
+			if (Vector3.Distance (player.Position, new Vector3 (x, y, 0)) <= _interactiveDistance)
 			{
-				level.SetTile (x, y, TileDatabase.Clone (_resultTile, new Vector3 (x, y, 0)), 0);
-				return true;
+				if (_targetTiles.Contains (tile))
+				{
+					level.SetTile (x, y, TileDatabase.Clone (_resultTile, new Vector3 (x, y, 0)), 0);
+					return true;
+				}
+			}
+			else
+			{
+				Debug.Log ("Out of range");
 			}
 		}
 		return false;
@@ -46,6 +56,11 @@ public class Instrument : Item
 	public int Damage
 	{
 		get {return _damage;} set {_damage = value;}
+	}
+
+	public int InteractiveDistance
+	{
+		get {return _interactiveDistance;} set {_interactiveDistance = value;}
 	}
 }
 

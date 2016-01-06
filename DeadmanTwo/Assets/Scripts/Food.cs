@@ -5,7 +5,7 @@ public class Food : Item
 {
 	private int _healAmount;
 
-	public Food (string name, string description, int healAmount) : base (name, description)
+	public Food (int id, string name, string description, float delay, int healAmount) : base (id, name, description, delay)
 	{
 		this._healAmount = healAmount;
 	}

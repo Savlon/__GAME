@@ -8,7 +8,7 @@ public class Seed : Item
 	private Tile _resultTile;
 	private List<Tile> _targetTiles = new List<Tile> ();
 
-	public Seed (string name, string description, Tile resultTile, params Tile[] targetTiles) : base (name, description)
+	public Seed (int id, string name, string description, float delay, Tile resultTile, params Tile[] targetTiles) : base (id, name, description, delay)
 	{
 		this._resultTile = resultTile;
 		this._targetTiles = targetTiles.ToList ();
