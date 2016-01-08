@@ -11,7 +11,7 @@ public class Player : Mob
 		Speed = 4f;
 		Health = 90;
 		MaxHealth = 100;
-		_activeItem = ItemDatabase.GetItemFromID (ItemDatabase.SHOVEL.ID);
+		SetActiveItem (ItemDatabase.GetItemFromID (ItemDatabase.SHOVEL.ID));
 
 		base.Start ();
 	}
@@ -58,7 +58,7 @@ public class Player : Mob
 				else if (_activeItem is Instrument)
 				{
 					List<Entity> entities = _level.GetEntitiesInArea ((int)mousePosition.x, (int)mousePosition.y, (int)mousePosition.y, (int)mousePosition.x);
-					//TODO: Shooot raycast to see if mouse clicked on entity and not self
+					//TODO: Shoot raycast to see if mouse clicked on entity and not self
 					//TODO: this is to decide whether to interact with tile or entity
 					if (entities.Count > 0)
 					{

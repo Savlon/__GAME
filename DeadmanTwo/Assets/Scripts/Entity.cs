@@ -12,6 +12,12 @@ public class Entity : MonoBehaviour
 
 	public Level _level;
 
+	public int _oldXPosition;
+	public int _oldYPosition;
+
+	public int _knockbackX;
+	public int _knockbackY;
+
 	protected virtual void Awake ()
 	{
 		_transform = GetComponent <Transform> ();
@@ -22,8 +28,14 @@ public class Entity : MonoBehaviour
 		_speed = 1f;
 		_remove = false;
 		_level = level;
-		_maxHealth = 1;
+		_maxHealth = 1000;
 		_health = _maxHealth;
+	}
+
+	public virtual void Finalize (Level level)
+	{
+		//Place something in here if you wish to do something prior to it being removed
+		//I.e instantiate a blood spatter or body parts etc...
 	}
 
 	protected virtual void Start () 
@@ -33,7 +45,26 @@ public class Entity : MonoBehaviour
 	
 	protected virtual void Update () 
 	{
-	
+		if (_knockbackX != 0 || _knockbackY != 0)
+		{
+			Move (_knockbackX, _knockbackY);
+
+			if (_knockbackX > 0)
+				_knockbackX--;
+			else if (_knockbackX < 0)
+				_knockbackX++;
+
+			if (_knockbackY > 0)
+				_knockbackY--;
+			else if (_knockbackY < 0)
+				_knockbackY++;
+
+		}
+
+		if (Health <= 0)
+		{
+			_remove = true;
+		}
 	}
 
 	public virtual void Move (float x, float y)

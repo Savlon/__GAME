@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\SpriteMerger.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />
      <Compile Include="Assets\Scripts\TileDatabase.cs" />
+     <Compile Include="Assets\Scripts\TileLayer.cs" />
      <Compile Include="Assets\Scripts\Water.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

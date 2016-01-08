@@ -4,7 +4,7 @@ using System.Collections;
 public class Mob : Entity
 {
 
-	private Direction _direction;
+	public Direction _direction;
 
 	protected override void Update ()
 	{

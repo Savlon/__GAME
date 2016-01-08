@@ -23,7 +23,20 @@ public class Instrument : Item
 	public override bool Interact (Player player, Entity entity)
 	{
 		//add attack code to reduce health of opponent
-		Debug.Log (player.name + " is attacking " + entity.name + " with a " + _type.ToString ());
+		if (player != null && entity != null)
+		{
+			if (Vector3.Distance (player.Position, entity.Position) <= 1.5f)
+			{
+				entity.Health -= _damage;
+
+				Vector3 dir = entity.Position - player.Position;
+				dir.Normalize ();
+
+				entity._knockbackX = Mathf.RoundToInt (dir.x) * 10;
+				entity._knockbackY = Mathf.RoundToInt (dir.y) * 10;
+				return true;
+			}
+		}
 		return false;
 	}
 

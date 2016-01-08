@@ -16,18 +16,27 @@ public class Level : MonoBehaviour
 	private List <Entity> _entitiesInGame;
 	private List <Entity>[,] _entitiesInTiles;
 
-	private byte[,] _tiles;
-	private byte[,] _data;
+//	private byte[,] _tiles;
+//	private byte[,] _data;
+//
+//	private GameObject[,] _tileObjects;
 
-	private GameObject[,] _tileObjects;
-	
+	private TileLayer[] _tileLayers;
+
+	private TileLayer _baseLayer;
+	private TileLayer _overlayLayer;
+
 	void Start () 
 	{
 		_entitiesInGame = new List<Entity> ();
 
-		_tiles = new byte[width, height];
-		_data = new byte[width, height];
-		_tileObjects = new GameObject[width, height];
+
+		_baseLayer = new TileLayer (width, height);
+		_overlayLayer = new TileLayer (width, height);
+
+		_tileLayers = new TileLayer[2];
+		_tileLayers[0] = _baseLayer;
+		_tileLayers[1] = _overlayLayer;
 
 		_entitiesInTiles = new List<Entity>[width, height];
 		for (int x = 0; x < _entitiesInTiles.GetLength (0); x++)
@@ -35,22 +44,22 @@ public class Level : MonoBehaviour
 				_entitiesInTiles[x, y] = new List<Entity> ();
 
 
-		for (int y = 0; y < _tiles.GetLength (1); y++)
+		for (int y = 0; y < _baseLayer.Height; y++)
 		{
-			for (int x = 0; x < _tiles.GetLength (0); x++)
+			for (int x = 0; x < _baseLayer.Width; x++)
 			{
-				if (_tileObjects[x, y] == null)
+				if (_baseLayer.GetTileGameObject (x, y) == null)
 				{
 					GameObject tile = Instantiate (referenceTilePrefab, new Vector3 (x, y, level), Quaternion.identity) as GameObject;
-					_tileObjects[x, y] = tile;
+					_baseLayer.SetTileGameObject (x, y, tile);
 					tile.transform.SetParent (gameObject.transform, true);
 				}
 			}
 		}
 
-		for (int y = 0; y < _tiles.GetLength (1); y++)
+		for (int y = 0; y < _baseLayer.Height; y++)
 		{
-			for (int x = 0; x < _tiles.GetLength (0); x++)
+			for (int x = 0; x < _baseLayer.Width; x++)
 			{
 				SetTile ((float)x, (float)y, TileDatabase.Clone (TileDatabase.GRASS, new Vector3 (x, y, level)), 0);
 			}
@@ -59,25 +68,42 @@ public class Level : MonoBehaviour
 
 	private float timer;
 
+	private int oldEX;
+	private int oldEY;
+
 	void Update () 
 	{
 		if (Input.GetKeyDown (KeyCode.Space))
 		{
-			for (int y = 0; y < _tiles.GetLength (1); y++)
+			for (int p = _tileLayers.Length - 1; p >= 0; p--)
 			{
-				for (int x = 0; x < _tiles.GetLength (0); x++)
+				Debug.Log (p);
+				if (_tileLayers[p].GetTileGameObject (0, 0) == null)
 				{
-					int rng = Random.Range (0, 4);
-
-//					if (x == 0 || y == 0 || x >= _tiles.GetLength (0) - 1 || y >= _tiles.GetLength (1) - 1)
-//						rng = 3;
-
-					Tile clonedTile = TileDatabase.Clone (TileDatabase.tiles[rng], new Vector3 (x, y, 0));
-					SetTile ((float)x, (float)y, clonedTile, 0);
+					GameObject tile = Instantiate (referenceTilePrefab, new Vector3 (0, 0, level), Quaternion.identity) as GameObject;
+					_tileLayers[p].SetTileGameObject (0, 0, tile);
+					tile.transform.SetParent (gameObject.transform, true);
 				}
 			}
-
 		}
+
+//		if (Input.GetKeyDown (KeyCode.Space))
+//		{
+//			for (int y = 0; y < _tiles.GetLength (1); y++)
+//			{
+//				for (int x = 0; x < _tiles.GetLength (0); x++)
+//				{
+//					int rng = Random.Range (0, 4);
+//
+////					if (x == 0 || y == 0 || x >= _tiles.GetLength (0) - 1 || y >= _tiles.GetLength (1) - 1)
+////						rng = 3;
+//
+//					Tile clonedTile = TileDatabase.Clone (TileDatabase.tiles[rng], new Vector3 (x, y, 0));
+//					SetTile ((float)x, (float)y, clonedTile, 0);
+//				}
+//			}
+//
+//		}
 
 
 		timer -= Time.deltaTime;
@@ -86,9 +112,9 @@ public class Level : MonoBehaviour
 		{
 			timer = 4 * Time.deltaTime;
 
-			for (int y = 0; y < _tiles.GetLength (1); y++)
+			for (int y = 0; y < _baseLayer.Height; y++)
 			{
-				for (int x = 0; x < _tiles.GetLength (0); x++)
+				for (int x = 0; x < _baseLayer.Width; x++)
 				{
 					GetTile ((float)x, (float)y).UpdateImage (this, x, y);
 				}
@@ -97,12 +123,10 @@ public class Level : MonoBehaviour
 		
 
 //		//TEST
-//		if (Input.GetKeyDown (KeyCode.A))
-//		{
-//			Add (referenceEntityPrefab, 0, 0);
-//			SetData (0.0f, 0.0f, 3999);
-//			Debug.Log ("[GAME] Data: " + GetData (0.0f, 0.0f));
-//		}
+		if (Input.GetKeyDown (KeyCode.Q))
+		{
+			Add (referenceEntityPrefab, 5, 5);
+		}
 ////
 //		if (Input.GetKeyDown (KeyCode.R))
 //		{
@@ -124,16 +148,20 @@ public class Level : MonoBehaviour
 			GetTile (xt, yt).Update (this, (int)xt, (int)yt);
 		}
 
-//		for (int y = 0; y < _tiles.GetLength (1); y++)
-//		{
-//			for (int x = 0; x < _tiles.GetLength (0); x++)
-//			{
-//				Tile tile = GetTile ((float)x, (float)y);
-//
-//				tile.UpdateImage (this, x, y);
-//			}
-//		}
+		for (int i = 0; i < _entitiesInGame.Count; i++) {
+			Entity e = _entitiesInGame[i];
 
+			int eX = Mathf.FloorToInt (e.Position.x);
+			int eY = Mathf.FloorToInt (e.Position.y);
+
+			if (eX != e._oldXPosition || eY != e._oldYPosition)
+			{
+				RemoveEntity (e._oldXPosition, e._oldYPosition, e);
+				InsertEntity (eX, eY, e);
+				e._oldXPosition = eX;
+				e._oldYPosition = eY;
+			}
+		}
 
 		for (int i = 0; i < _entitiesInGame.Count; i++)
 		{
@@ -145,14 +173,26 @@ public class Level : MonoBehaviour
 		}
 	}
 
-
+	//TODO: Make it so that each tile holds a variable to say whether it is a base layer tile or
+	//		an overlay tile (grass = base, bush/shrub = overlay)
 	public Tile GetTile (float x, float y)
 	{
 		int xPos = Mathf.FloorToInt (x);
 		int yPos = Mathf.FloorToInt (y);
 
 		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return TileDatabase.ROCK;
-		return TileDatabase.tiles[_tiles [xPos, yPos]];
+
+		int tId = _baseLayer.GetTileID (xPos, yPos);
+
+//		for (int layerIndex = _tileLayers.Length; layerIndex >= 0; layerIndex--) 
+//		{
+//			if (_tileLayers[layerIndex].GetTileID (xPos, yPos) != 255)
+//			{
+//				tId = _tileLayers[layerIndex].GetTileID (xPos, yPos);
+//			}
+//		}
+
+		return TileDatabase.tiles[tId];
 	}
 
 	public void SetTile (float x, float y, Tile tile, int dataValue)
@@ -162,9 +202,9 @@ public class Level : MonoBehaviour
 		
 		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return;
 
-		_tiles[xPos, yPos] = tile.ID;
-		_tileObjects[xPos, yPos].GetComponent <SpriteRenderer> ().sprite = tile.Image;
-		_data[xPos, yPos] = (byte)dataValue;
+		_baseLayer.SetTileID (xPos, yPos, tile.ID);
+		_baseLayer.GetTileGameObject (xPos, yPos).GetComponent <SpriteRenderer> ().sprite = tile.Image;
+		_baseLayer.SetTileData (xPos, yPos, (byte)dataValue);
 	}
 
 	public int GetData (float x, float y)
@@ -174,7 +214,9 @@ public class Level : MonoBehaviour
 		
 		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return 0;
 
-		return _data[xPos, yPos] & 0xff;
+		int tData = _baseLayer.GetTileData (xPos, yPos);
+
+		return tData & 0xff;
 	}
 
 	public void SetData (float x, float y, int value)
@@ -184,7 +226,7 @@ public class Level : MonoBehaviour
 		
 		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return;
 
-		_data[xPos, yPos] = (byte)value;
+		_baseLayer.SetTileData (xPos, yPos, (byte)value);
 	}
 
 	public void Add (Entity referenceEntity, int x, int y)
@@ -199,6 +241,7 @@ public class Level : MonoBehaviour
 	{
 		_entitiesInGame.Remove (entity);
 		RemoveEntity (entity.Position.x, entity.Position.y, entity);
+		entity.Finalize (this);
 		Destroy (entity.gameObject);
 	}
 
@@ -209,7 +252,8 @@ public class Level : MonoBehaviour
 		
 		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return;
 
-		_entitiesInTiles[xPos, yPos].Add (entity);
+		if (!_entitiesInTiles[xPos, yPos].Contains (entity))
+			_entitiesInTiles[xPos, yPos].Add (entity);
 	}
 
 	private void RemoveEntity (float x, float y, Entity entity)
@@ -219,7 +263,8 @@ public class Level : MonoBehaviour
 		
 		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return;
 
-		_entitiesInTiles[xPos, yPos].Remove (entity);
+		if (_entitiesInTiles[xPos, yPos].Contains (entity))
+			_entitiesInTiles[xPos, yPos].Remove (entity);
 	}
 
 	public List <Entity> GetEntitiesInArea (int bottomLeft, int topLeft, int topRight, int bottomRight)

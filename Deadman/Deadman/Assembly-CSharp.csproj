@@ -45,16 +45,15 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Character.cs" />
-     <Compile Include="Assets\Scripts\DirectionInput.cs" />
-     <Compile Include="Assets\Scripts\Entity.cs" />
-     <Compile Include="Assets\Scripts\Hit.cs" />
-     <Compile Include="Assets\Scripts\HitTester.cs" />
-     <Compile Include="Assets\Scripts\Hitpoints.cs" />
-     <Compile Include="Assets\Scripts\IDamagable.cs" />
-     <Compile Include="Assets\Scripts\IFlipable.cs" />
-     <Compile Include="Assets\Scripts\IMovable.cs" />
-     <Compile Include="Assets\Scripts\KeyInput.cs" />
+     <Compile Include="Assets\Entity.cs" />
+     <Compile Include="Assets\GameTest.cs" />
+     <Compile Include="Assets\Health.cs" />
+     <Compile Include="Assets\IEntity.cs" />
+     <Compile Include="Assets\Impact.cs" />
+     <Compile Include="Assets\ImpactObserver.cs" />
+     <Compile Include="Assets\Mobility.cs" />
+     <Compile Include="Assets\Visual.cs" />
+     <Compile Include="Assets\Weapon.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
