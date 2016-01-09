@@ -10,8 +10,8 @@ public class Level : MonoBehaviour
 	public int level;
 	//TEST
 
-	private int width = 100;
-	private int height = 100;
+	private int width = 10;
+	private int height = 10;
 
 	private List <Entity> _entitiesInGame;
 	private List <Entity>[,] _entitiesInTiles;
@@ -44,24 +44,25 @@ public class Level : MonoBehaviour
 				_entitiesInTiles[x, y] = new List<Entity> ();
 
 
-		for (int y = 0; y < _baseLayer.Height; y++)
-		{
-			for (int x = 0; x < _baseLayer.Width; x++)
-			{
-				if (_baseLayer.GetTileGameObject (x, y) == null)
-				{
-					GameObject tile = Instantiate (referenceTilePrefab, new Vector3 (x, y, level), Quaternion.identity) as GameObject;
-					_baseLayer.SetTileGameObject (x, y, tile);
-					tile.transform.SetParent (gameObject.transform, true);
-				}
-			}
-		}
+//		for (int y = 0; y < _baseLayer.Height; y++)
+//		{
+//			for (int x = 0; x < _baseLayer.Width; x++)
+//			{
+//				if (_baseLayer.GetTileGameObject (x, y) == null)
+//				{
+//					GameObject tile = Instantiate (referenceTilePrefab, new Vector3 (x, y, level), Quaternion.identity) as GameObject;
+//					_baseLayer.SetTileGameObject (x, y, tile);
+//					tile.transform.SetParent (gameObject.transform, true);
+//				}
+//			}
+//		}
 
 		for (int y = 0; y < _baseLayer.Height; y++)
 		{
 			for (int x = 0; x < _baseLayer.Width; x++)
 			{
-				SetTile ((float)x, (float)y, TileDatabase.Clone (TileDatabase.GRASS, new Vector3 (x, y, level)), 0);
+//				SetTile ((float)x, (float)y, TileDatabase.Clone (TileDatabase.GRASS, new Vector3 (x, y, level)), 0);
+				SetTileOnLayer ((float)x, (float)y, TileDatabase.Clone (TileDatabase.GRASS, new Vector3 (x, y, 0)), 0, 0);
 			}
 		}
 	}
@@ -75,16 +76,26 @@ public class Level : MonoBehaviour
 	{
 		if (Input.GetKeyDown (KeyCode.Space))
 		{
-			for (int p = _tileLayers.Length - 1; p >= 0; p--)
-			{
-				Debug.Log (p);
-				if (_tileLayers[p].GetTileGameObject (0, 0) == null)
-				{
-					GameObject tile = Instantiate (referenceTilePrefab, new Vector3 (0, 0, level), Quaternion.identity) as GameObject;
-					_tileLayers[p].SetTileGameObject (0, 0, tile);
-					tile.transform.SetParent (gameObject.transform, true);
-				}
-			}
+			SetTile (1, 1, TileDatabase.ROCK, 0);
+			SetTile (1, 2, TileDatabase.ROCK, 0);
+
+			Debug.Log ("Tile At 1, 1 " + GetTileOnLayer (1f, 1f, 0).ID );
+			Debug.Log ("Tile At 1, 1 " + GetTileOnLayer (1f, 1f, 1).ID );
+//			for (int p = _tileLayers.Length - 1; p >= 0; p--)
+//			{
+//				Debug.Log (p);
+//				if (_tileLayers[p].GetTileGameObject (0, 0) == null)
+//				{
+//					GameObject tile = Instantiate (referenceTilePrefab, new Vector3 (0, 0, level), Quaternion.identity) as GameObject;
+//					_tileLayers[p].SetTileGameObject (0, 0, tile);
+//					tile.transform.SetParent (gameObject.transform, true);
+//				}
+//			}
+		}
+
+		if (Input.GetKeyDown (KeyCode.Y))
+		{
+			SetTile (1, 1, TileDatabase.AIR, 0);
 		}
 
 //		if (Input.GetKeyDown (KeyCode.Space))
@@ -112,13 +123,28 @@ public class Level : MonoBehaviour
 		{
 			timer = 4 * Time.deltaTime;
 
-			for (int y = 0; y < _baseLayer.Height; y++)
-			{
-				for (int x = 0; x < _baseLayer.Width; x++)
-				{
-					GetTile ((float)x, (float)y).UpdateImage (this, x, y);
+			for (int x = 0; x < width; x++) {
+				for (int y = 0; y < height; y++) {
+					if (GetTileOnLayer ((float)x, (float)y, 1) != TileDatabase.AIR)
+						GetTileOnLayer ((float)x, (float)y, 1).UpdateImage (this, x, y);
+
+					GetTileOnLayer ((float)x, (float)y, 0).UpdateImage (this, x, y);
 				}
 			}
+
+//			for (int y = 0; y < _baseLayer.Height; y++)
+//			{
+//				for (int x = 0; x < _baseLayer.Width; x++)
+//				{
+//					for (int i = 0; i < _tileLayers.Length; i++) {
+//						Tile t = GetTileOnLayer ((float)x, (float)y, i);
+//						if (t.ID != TileDatabase.AIR.ID)
+//							t.UpdateImage (this, x, y);
+//						//.UpdateImage (this, x, y);
+//					}
+////					GetTile ((float)x, (float)y).UpdateImage (this, x, y);
+//				}
+//			}
 		}
 		
 
@@ -173,6 +199,18 @@ public class Level : MonoBehaviour
 		}
 	}
 
+	public Tile GetTileOnLayer (float x, float y, int layerIndex)
+	{
+		int xPos = Mathf.FloorToInt (x);
+		int yPos = Mathf.FloorToInt (y);
+		
+		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return TileDatabase.AIR;
+
+		int index = _tileLayers[layerIndex].GetTileID (xPos, yPos);
+
+		return TileDatabase.tiles[index];
+	}
+
 	//TODO: Make it so that each tile holds a variable to say whether it is a base layer tile or
 	//		an overlay tile (grass = base, bush/shrub = overlay)
 	public Tile GetTile (float x, float y)
@@ -182,17 +220,65 @@ public class Level : MonoBehaviour
 
 		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return TileDatabase.ROCK;
 
-		int tId = _baseLayer.GetTileID (xPos, yPos);
+		int tId = 255;
 
-//		for (int layerIndex = _tileLayers.Length; layerIndex >= 0; layerIndex--) 
-//		{
-//			if (_tileLayers[layerIndex].GetTileID (xPos, yPos) != 255)
-//			{
-//				tId = _tileLayers[layerIndex].GetTileID (xPos, yPos);
-//			}
-//		}
+		for (int layerIndex = _tileLayers.Length - 1; layerIndex >= 0; layerIndex--) 
+		{
+//			if (_tileLayers[layerIndex].GetTileID (xPos, yPos) != TileDatabase.AIR.ID)
+			{
+				tId = _tileLayers[layerIndex].GetTileID (xPos, yPos);
+			}
+		}
 
 		return TileDatabase.tiles[tId];
+	}
+
+	public void SetTileOnLayer (float x, float y, Tile tile, int dataValue, int layerIndex)
+	{
+		int xPos = Mathf.FloorToInt (x);
+		int yPos = Mathf.FloorToInt (y);
+		
+		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return;
+
+
+		if (_tileLayers[layerIndex].GetTileGameObject (xPos, yPos) == null)
+		{
+			if (_tileLayers[layerIndex].GetTileID (xPos, yPos) != TileDatabase.AIR.ID ||
+			    (layerIndex == 0))
+			{
+				GameObject newTileGO = Instantiate (referenceTilePrefab, new Vector3 (xPos, yPos, layerIndex), Quaternion.identity) as GameObject;
+				newTileGO.transform.SetParent (gameObject.transform, true);
+				_tileLayers[layerIndex].SetTileGameObject (xPos, yPos, newTileGO);
+			}
+		}
+		else
+		{
+			if (_tileLayers[layerIndex].GetTileID (xPos, yPos) == TileDatabase.AIR.ID)
+			{
+				GameObject deleteReference = _tileLayers[layerIndex].GetTileGameObject (xPos, yPos);
+				_tileLayers[layerIndex].SetTileGameObject (xPos, yPos, null);
+				Destroy (deleteReference);
+			}
+		}
+			
+		if (layerIndex == 0 && tile.IsBaseTile)
+		{
+			_tileLayers[layerIndex].SetTileID (xPos, yPos, tile.ID);
+			_tileLayers[layerIndex].SetTileData (xPos, yPos, (byte)dataValue);
+			_tileLayers[layerIndex].GetTileGameObject (xPos, yPos).GetComponent <SpriteRenderer> ().sprite = tile.Image;
+			return;
+		}
+
+		if (layerIndex == 1 && !tile.IsBaseTile)
+		{
+			_tileLayers[layerIndex].SetTileID (xPos, yPos, tile.ID);
+			_tileLayers[layerIndex].SetTileData (xPos, yPos, (byte)dataValue);
+			_tileLayers[layerIndex].GetTileGameObject (xPos, yPos).GetComponent <SpriteRenderer> ().sprite = tile.Image;
+
+			if (!_tileLayers[layerIndex].GetTileGameObject (xPos, yPos).GetComponent <BoxCollider2D> ())
+				_tileLayers[layerIndex].GetTileGameObject (xPos, yPos).AddComponent <BoxCollider2D> ();
+			return;
+		}
 	}
 
 	public void SetTile (float x, float y, Tile tile, int dataValue)
@@ -202,9 +288,59 @@ public class Level : MonoBehaviour
 		
 		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return;
 
-		_baseLayer.SetTileID (xPos, yPos, tile.ID);
-		_baseLayer.GetTileGameObject (xPos, yPos).GetComponent <SpriteRenderer> ().sprite = tile.Image;
-		_baseLayer.SetTileData (xPos, yPos, (byte)dataValue);
+		// IF TOP LAYER IS AIR
+		if (_tileLayers[1].GetTileID (xPos, yPos) == TileDatabase.AIR.ID)
+		{
+			// IF DESIRED TILE IS NOT A BASE TILE
+			if (!tile.IsBaseTile)
+			{
+				// IF TOP LAYER DOESN'T HAVE A GAMEOBJECT
+				if (_tileLayers[1].GetTileGameObject (xPos, yPos) == null)
+				{
+					// CREATE A NEW TILE GAMEOBJECT
+					GameObject newTileGO = Instantiate (referenceTilePrefab, new Vector3 (xPos, yPos, -1), Quaternion.identity) as GameObject;
+					newTileGO.transform.SetParent (gameObject.transform, true);
+					_tileLayers[1].SetTileGameObject (xPos, yPos, newTileGO);
+				}
+
+				_tileLayers[1].GetTileGameObject (xPos, yPos).GetComponent <SpriteRenderer> ().sprite = tile.Image;
+				_tileLayers[1].SetTileID (xPos, yPos, tile.ID);
+				_tileLayers[1].SetTileData (xPos, yPos, (byte)dataValue);
+			}
+			else if (tile.IsBaseTile)
+			{
+				if (_tileLayers[1].GetTileGameObject (xPos, yPos) != null)
+				{
+					GameObject deleteReferenceGO = _tileLayers[1].GetTileGameObject (xPos, yPos);
+					_tileLayers[1].SetTileGameObject (xPos, yPos, null);
+					Destroy (deleteReferenceGO);
+				}
+
+				_tileLayers[0].SetTileID (xPos, yPos, tile.ID);
+				_tileLayers[0].SetTileData (xPos, yPos, (byte)dataValue);
+				_tileLayers[0].GetTileGameObject (xPos, yPos).GetComponent <SpriteRenderer> ().sprite = tile.Image;
+			}
+		}
+		else
+		{
+			if (tile.ID == TileDatabase.AIR.ID)
+			{
+				_tileLayers[1].SetTileID (xPos, yPos, tile.ID);
+				_tileLayers[1].SetTileData (xPos, yPos, (byte)dataValue);
+
+				GameObject deleteReferenceGO = _tileLayers[1].GetTileGameObject (xPos, yPos);
+				_tileLayers[1].SetTileGameObject (xPos, yPos, null);
+				Destroy (deleteReferenceGO);
+				return;
+			}
+
+			if (!tile.IsBaseTile)
+			{
+				_tileLayers[1].SetTileID (xPos, yPos, tile.ID);
+				_tileLayers[1].SetTileData (xPos, yPos, (byte)dataValue);
+				_tileLayers[1].GetTileGameObject (xPos, yPos).GetComponent <SpriteRenderer> ().sprite = tile.Image;
+			}
+		}
 	}
 
 	public int GetData (float x, float y)

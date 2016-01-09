@@ -13,7 +13,9 @@ public static class TileDatabase
 	public static Tile WATER = new Water (3);
 	public static Tile HOLE = new Hole (4);
 
-	public static Tile ROCK = new Tile (99, new Vector3 (), false);
+
+	public static Tile ROCK = new Tile (99, Vector3.zero, false, false);
+	public static Tile AIR = new Tile (255, Vector3.zero, true, false);
 
 
 

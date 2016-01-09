@@ -16,18 +16,25 @@ public class TileLayer
 		_tiles = new byte[width, height];
 		_data = new byte[width, height];
 		_tileObjects = new GameObject[width, height];
+
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				_tiles[x, y] = TileDatabase.AIR.ID;
+				_data[x, y] = 255;
+			}
+		}
 	}
 
 	public byte GetTileID (int x, int y)
 	{
-		if (x < 0 || y < 0 || x >= _width || y >= _height) return 255;
+		if (x < 0 || y < 0 || x >= _width || y >= _height) return TileDatabase.ROCK.ID;
 
 		return _tiles[x, y];
 	}
 
 	public byte GetTileData (int x, int y)
 	{
-		if (x < 0 || y < 0 || x >= _width || y >= _height) return 255;
+		if (x < 0 || y < 0 || x >= _width || y >= _height) return 0;
 
 		return _data[x, y];
 	}

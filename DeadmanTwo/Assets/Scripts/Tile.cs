@@ -7,6 +7,7 @@ public class Tile
 	private byte _id;
 	private Vector3 _position;
 	private bool _passable;
+	private bool _isBaseTile;
 	private Sprite _image;
 
 	//TILES NEW
@@ -14,11 +15,12 @@ public class Tile
 	private int[] _spriteIndexValues;
 	private Dictionary <int, Sprite> _tilesetSprites;
 
-	public Tile (int id, Vector3 position = new Vector3 (), bool passable = true)
+	public Tile (int id, Vector3 position = new Vector3 (), bool passable = true, bool isBaseTile = true)
 	{
 		_id = (byte)id;
 		_position = position;
 		_passable = passable;
+		_isBaseTile = isBaseTile;
 
 		SetupTileReferences ();
 
@@ -45,6 +47,7 @@ public class Tile
 		_id = tileClone._id;
 		_position = position;
 		_passable = tileClone._passable;
+		_isBaseTile = tileClone._isBaseTile;
 		_image = tileClone._image;
 	}
 
@@ -65,15 +68,26 @@ public class Tile
 	
 	public virtual void UpdateImage (Level level, int x, int y)
 	{
-		bool up = level.GetTile ((float)x, (float)y + 1).ID != ID;
-		bool down = level.GetTile ((float)x, (float)y - 1).ID != ID;
-		bool left = level.GetTile ((float)x - 1, (float)y).ID != ID;
-		bool right = level.GetTile ((float)x + 1, (float)y).ID != ID;
+//		bool check = level.GetTileOnLayer ((float)x, (float)y, _isBaseTile ? 0 : 1).ID != ID;
+		bool up = level.GetTileOnLayer ((float)x, (float)y + 1, _isBaseTile ? 0 : 1).ID != ID;
+		bool down = level.GetTileOnLayer ((float)x, (float)y - 1, _isBaseTile ? 0 : 1).ID != ID;
+		bool left = level.GetTileOnLayer ((float)x - 1, (float)y, _isBaseTile ? 0 : 1).ID != ID;
+		bool right = level.GetTileOnLayer ((float)x + 1, (float)y, _isBaseTile ? 0 : 1).ID != ID;
 		
-		bool upLeft = level.GetTile ((float)x - 1, (float)y + 1).ID != ID;
-		bool upRight = level.GetTile ((float)x + 1, (float)y + 1).ID != ID;
-		bool downLeft = level.GetTile ((float)x - 1, (float)y - 1).ID != ID;
-		bool downRight = level.GetTile ((float)x + 1, (float)y - 1).ID != ID;
+		bool upLeft = level.GetTileOnLayer ((float)x - 1, (float)y + 1, _isBaseTile ? 0 : 1).ID != ID;
+		bool upRight = level.GetTileOnLayer ((float)x + 1, (float)y + 1, _isBaseTile ? 0 : 1).ID != ID;
+		bool downLeft = level.GetTileOnLayer ((float)x - 1, (float)y - 1, _isBaseTile ? 0 : 1).ID != ID;
+		bool downRight = level.GetTileOnLayer ((float)x + 1, (float)y - 1, _isBaseTile ? 0 : 1).ID != ID;
+
+//		bool up = level.GetTile ((float)x, (float)y + 1).ID != ID;
+//		bool down = level.GetTile ((float)x, (float)y - 1).ID != ID;
+//		bool left = level.GetTile ((float)x - 1, (float)y).ID != ID;
+//		bool right = level.GetTile ((float)x + 1, (float)y).ID != ID;
+//		
+//		bool upLeft = level.GetTile ((float)x - 1, (float)y + 1).ID != ID;
+//		bool upRight = level.GetTile ((float)x + 1, (float)y + 1).ID != ID;
+//		bool downLeft = level.GetTile ((float)x - 1, (float)y - 1).ID != ID;
+//		bool downRight = level.GetTile ((float)x + 1, (float)y - 1).ID != ID;
 		
 		int index = 0;
 		int n = !up ? 1 : 0;
@@ -90,7 +104,8 @@ public class Tile
 
 		_image = _tilesetSprites[_spriteIndexValues[index]];
 
-		level.SetTile ((float)x, (float)y, this, level.GetData ((float)x, (float)y));
+		level.SetTileOnLayer ((float)x, (float)y, this, level.GetData ((float)x, (float)y), _isBaseTile ? 0 : 1);
+//		level.SetTile ((float)x, (float)y, this, level.GetData ((float)x, (float)y));
 	}
 
 	public byte ID
@@ -109,6 +124,12 @@ public class Tile
 	{
 		get {return _passable;}
 		set {_passable = value;}
+	}
+
+	public bool IsBaseTile
+	{
+		get {return _isBaseTile;}
+		private set {_isBaseTile = value;}
 	}
 
 	public Sprite Image

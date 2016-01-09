@@ -14,7 +14,7 @@ public static class ItemDatabase
 	public static Item TREE_SEED = new Seed (2, "Tree Seed", "Grows into tree.", 2.0f, TileDatabase.SAND, TileDatabase.GRASS);
 
 	// INSTRUMENTS
-	public static Item SHOVEL = new Instrument (3, "Shovel", "I'm gonna dig me a hole.", 0.7f, InstrumentType.SHOVEL, 30, 4, TileDatabase.DIRT, TileDatabase.GRASS);
+	public static Item SHOVEL = new Instrument (3, "Shovel", "I'm gonna dig me a hole.", 0.7f, InstrumentType.SHOVEL, 30, 4, TileDatabase.ROCK, TileDatabase.GRASS);
 
 
 
