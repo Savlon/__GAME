@@ -275,8 +275,8 @@ public class Level : MonoBehaviour
 			_tileLayers[layerIndex].SetTileData (xPos, yPos, (byte)dataValue);
 			_tileLayers[layerIndex].GetTileGameObject (xPos, yPos).GetComponent <SpriteRenderer> ().sprite = tile.Image;
 
-			if (!_tileLayers[layerIndex].GetTileGameObject (xPos, yPos).GetComponent <BoxCollider2D> ())
-				_tileLayers[layerIndex].GetTileGameObject (xPos, yPos).AddComponent <BoxCollider2D> ();
+//			if (!_tileLayers[layerIndex].GetTileGameObject (xPos, yPos).GetComponent <BoxCollider2D> ())
+//				_tileLayers[layerIndex].GetTileGameObject (xPos, yPos).AddComponent <BoxCollider2D> ();
 			return;
 		}
 	}

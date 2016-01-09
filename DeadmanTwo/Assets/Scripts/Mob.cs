@@ -41,6 +41,39 @@ public class Mob : Entity
 			GetComponent <Animator> ().SetBool ("Walk", false);
 
 
+		
+		if (x > 0f)
+		{
+			float xNext = Mathf.FloorToInt (Position.x + 0.05f);
+
+			if (!_level.GetTileOnLayer (xNext, Position.y, 1).Passable)
+				x = 0;
+		}
+		else if (x < 0f)
+		{
+			float xNext = Mathf.FloorToInt (Position.x - 0.05f);
+
+			if (!_level.GetTileOnLayer (xNext, Position.y, 1).Passable)
+				x = 0;
+		}
+
+		if (y > 0f)
+		{
+			float yNext = Mathf.FloorToInt (Position.y + 0.05f);
+
+			if (!_level.GetTileOnLayer (Position.x, yNext, 1).Passable)
+				y = 0;
+		}
+		else if (y < 0f)
+		{
+			float yNext = Mathf.FloorToInt (Position.y - 0.05f);
+
+			if (!_level.GetTileOnLayer (Position.x, yNext, 1).Passable)
+				y = 0;
+		}
+
+		
+
 		base.Move (x, y);
 	}
 
