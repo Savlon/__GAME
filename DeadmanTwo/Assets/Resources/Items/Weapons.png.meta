@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 8268efce9c8c34788890cd73781c00b0
-timeCreated: 1452397491
+timeCreated: 1452407401
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,6 +10,9 @@ TextureImporter:
     21300006: Weapons_3
     21300008: Weapons_8
     21300010: Weapons_4
+    21300012: Weapons_5
+    21300014: Weapons_6
+    21300016: Weapons_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -115,6 +118,36 @@ TextureImporter:
         height: 32
       alignment: 9
       pivot: {x: .512301445, y: .272423744}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Weapons_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: .540555954, y: .240555763}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Weapons_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 160
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: .370237827, y: .335634232}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Weapons_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 160
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: .523789883, y: .418433666}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

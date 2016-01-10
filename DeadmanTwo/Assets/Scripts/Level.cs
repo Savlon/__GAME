@@ -10,8 +10,8 @@ public class Level : MonoBehaviour
 	public int level;
 	//TEST
 
-	private int width = 10;
-	private int height = 10;
+	private int width = 100;
+	private int height = 100;
 
 	private List <Entity> _entitiesInGame;
 	private List <Entity>[,] _entitiesInTiles;
@@ -220,14 +220,14 @@ public class Level : MonoBehaviour
 
 		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return TileDatabase.ROCK;
 
-		int tId = 255;
+		int tId = GetTileOnLayer (xPos, yPos, 0).ID;
 
 		for (int layerIndex = _tileLayers.Length - 1; layerIndex >= 0; layerIndex--) 
 		{
-			if (_tileLayers[layerIndex].GetTileID (xPos, yPos) != TileDatabase.AIR.ID)
-			{
-				tId = _tileLayers[layerIndex].GetTileID (xPos, yPos);
-			}
+			Tile t = GetTileOnLayer (xPos, yPos, layerIndex);
+
+			if (t.ID != TileDatabase.AIR.ID && !t.IsBaseTile)
+				tId = t.ID;
 		}
 
 		return TileDatabase.tiles[tId];

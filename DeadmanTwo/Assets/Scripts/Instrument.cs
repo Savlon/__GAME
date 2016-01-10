@@ -80,6 +80,7 @@ public class Instrument : Item
 public enum InstrumentType
 {
 	AXE,
+	PICKAXE,
 	SHOVEL,
 	HOE,
 	SWORD

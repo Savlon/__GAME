@@ -9,6 +9,7 @@ public class Player : Mob
 	protected override void Start ()
 	{
 		Speed = 4f;
+		NormalSpeed = Speed;
 		Health = 90;
 		MaxHealth = 100;
 		SetActiveItem (ItemDatabase.GetItemFromID (ItemDatabase.SHOVEL.ID));
@@ -74,7 +75,7 @@ public class Player : Mob
 					{
 						Vector2 myTilePos = Utils.FloorVector2 (Position.x, Position.y);
 
-						if (selectedTilePos == myTilePos) return;
+						if (selectedTilePos == myTilePos && !tile.IsBaseTile) return;
 
 						PlayAnimation ();
 
@@ -149,6 +150,22 @@ public class Player : Mob
 		else if (Input.GetKeyDown (KeyCode.Alpha5))
 		{
 			SetActiveItem (ItemDatabase.GetItemFromID (ItemDatabase.items[4].ID));
+		}		
+		else if (Input.GetKeyDown (KeyCode.Alpha6))
+		{
+			SetActiveItem (ItemDatabase.GetItemFromID (ItemDatabase.items[5].ID));
+		}
+		else if (Input.GetKeyDown (KeyCode.Alpha7))
+		{
+			SetActiveItem (ItemDatabase.GetItemFromID (ItemDatabase.items[6].ID));
+		}
+		else if (Input.GetKeyDown (KeyCode.Alpha8))
+		{
+			SetActiveItem (ItemDatabase.GetItemFromID (ItemDatabase.items[7].ID));
+		}
+		else if (Input.GetKeyDown (KeyCode.Alpha9))
+		{
+			SetActiveItem (ItemDatabase.GetItemFromID (ItemDatabase.items[8].ID));
 		}
 	}
 }

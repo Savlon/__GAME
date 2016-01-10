@@ -11,11 +11,18 @@ public class PlantableResource : Item
 	public PlantableResource (int id, string name, string description, float delay, Tile resultTile, params Tile[] targetTiles) : base (id, name, description, delay)
 	{
 		this._resultTile = resultTile;
-		this._targetTiles = targetTiles.ToList ();
+
+		if (targetTiles != null)
+			this._targetTiles = targetTiles.ToList ();
 	}
 
 	public override bool InteractOn (Tile tile, Level level, int x, int y, Player player)
 	{
+		if (_targetTiles.Count == 0 && _resultTile != null)
+		{
+			level.SetTile (x, y, _resultTile, 0);
+			return true;
+		}
 		if (_targetTiles != null && _resultTile != null)
 		{
 			if (_targetTiles.Contains (tile))

@@ -6,6 +6,7 @@ public class Entity : MonoBehaviour
 	private Transform _transform;
 	private bool _remove;
 	private float _speed;
+	private float _normalSpeed;
 
 	private int _health;
 	private int _maxHealth;
@@ -26,6 +27,7 @@ public class Entity : MonoBehaviour
 	public virtual void Initialize (Level level)
 	{
 		_speed = 1f;
+		_normalSpeed = _speed;
 		_remove = false;
 		_level = level;
 		_maxHealth = 1000;
@@ -95,6 +97,12 @@ public class Entity : MonoBehaviour
 	{
 		get {return _speed;}
 		set {_speed = value;}
+	}
+
+	public float NormalSpeed
+	{
+		get {return _normalSpeed;}
+		set {_normalSpeed = value;}
 	}
 
 	public bool Remove

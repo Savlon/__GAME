@@ -48,4 +48,9 @@ public class Water : Tile
 //			level.SetTile ((float)x, (float)y + 1, TileDatabase.Clone (TileDatabase.WATER, new Vector3 (x, y + 1, 0)), 0);
 //		}
 	}
+
+	public override void StepOn (Level level, int x, int y, Entity source)
+	{
+		source.Speed = source.NormalSpeed * 0.3f;
+	}
 }
