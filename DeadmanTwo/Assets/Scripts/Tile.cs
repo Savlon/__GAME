@@ -138,6 +138,26 @@ public class Tile
 		set {_image = value;}
 	}
 
+	public override bool Equals (object obj)
+	{
+		if (obj == null)
+			return false;
+
+		Tile tile = (Tile)obj;
+
+		return (_id == tile.ID) && (Position == tile.Position);
+	}
+
+	public override int GetHashCode ()
+	{
+		return _id.GetHashCode () ^ Position.GetHashCode ();
+	}
+
+	public override string ToString ()
+	{
+		return string.Format ("[Tile: ID={0}, Position={1}, Passable={2}, IsBaseTile={3}, Image={4}]", ID, Position, Passable, IsBaseTile, Image);
+	}
+
 	private void SetupTileReferences ()
 	{
 		_spriteIndexValues = new int[256];
@@ -424,6 +444,6 @@ public class Tile
 		_spriteIndexValues[254] = 31;
 		_spriteIndexValues[255] = 46;
 	}
-
+	
 
 }

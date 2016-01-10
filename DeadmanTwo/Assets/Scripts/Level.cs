@@ -204,7 +204,7 @@ public class Level : MonoBehaviour
 		int xPos = Mathf.FloorToInt (x);
 		int yPos = Mathf.FloorToInt (y);
 		
-		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return TileDatabase.AIR;
+		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return TileDatabase.ROCK;
 
 		int index = _tileLayers[layerIndex].GetTileID (xPos, yPos);
 
@@ -224,7 +224,7 @@ public class Level : MonoBehaviour
 
 		for (int layerIndex = _tileLayers.Length - 1; layerIndex >= 0; layerIndex--) 
 		{
-//			if (_tileLayers[layerIndex].GetTileID (xPos, yPos) != TileDatabase.AIR.ID)
+			if (_tileLayers[layerIndex].GetTileID (xPos, yPos) != TileDatabase.AIR.ID)
 			{
 				tId = _tileLayers[layerIndex].GetTileID (xPos, yPos);
 			}
@@ -275,8 +275,6 @@ public class Level : MonoBehaviour
 			_tileLayers[layerIndex].SetTileData (xPos, yPos, (byte)dataValue);
 			_tileLayers[layerIndex].GetTileGameObject (xPos, yPos).GetComponent <SpriteRenderer> ().sprite = tile.Image;
 
-//			if (!_tileLayers[layerIndex].GetTileGameObject (xPos, yPos).GetComponent <BoxCollider2D> ())
-//				_tileLayers[layerIndex].GetTileGameObject (xPos, yPos).AddComponent <BoxCollider2D> ();
 			return;
 		}
 	}

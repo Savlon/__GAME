@@ -13,7 +13,11 @@ public class Mob : Entity
 
 	public override void Move (float x, float y)
 	{
-		if (x == 0f || y == 0f)
+		if (x == 0f && y == 0f)
+		{
+			_direction = Direction.NONE;
+		}
+		else if (x == 0f || y == 0f)
 		{
 			if (x < 0f) _direction = Direction.LEFT;
 			if (x > 0f) _direction = Direction.RIGHT;
@@ -26,10 +30,6 @@ public class Mob : Entity
 			if (x > 0f && y > 0f) _direction = Direction.UP_RIGHT;
 			if (x < 0f && y < 0f) _direction = Direction.DOWN_LEFT;
 			if (x > 0f && y < 0f) _direction = Direction.DOWN_RIGHT;
-		}
-		else
-		{
-			_direction = Direction.NONE;
 		}
 
 		//TODO: CLEAN THIS UP

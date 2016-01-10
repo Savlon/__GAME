@@ -45,13 +45,16 @@ public class Player : Mob
 		if (Input.GetMouseButton (0) && timer <= 0)
 		{
 			Tile tile = _level.GetTile (mousePosition.x, mousePosition.y);
+			Vector2 selectedTilePos = Utils.FloorVector2 (mousePosition.x, mousePosition.y);
+
 			if (_activeItem != null)
 			{
 				timer = _activeItem.Delay;
-				PlayAnimation ();
 
 				if (_activeItem is Food)
 				{
+					PlayAnimation ();
+
 					_activeItem.Use (this);
 					return;
 				}
@@ -62,18 +65,27 @@ public class Player : Mob
 					//TODO: this is to decide whether to interact with tile or entity
 					if (entities.Count > 0)
 					{
+						PlayAnimation ();
+
 						_activeItem.Interact (this, entities[0]);
 						return;
 					}
 					else
 					{
-						Debug.Log ("ELSE");
+						Vector2 myTilePos = Utils.FloorVector2 (Position.x, Position.y);
+
+						if (selectedTilePos == myTilePos) return;
+
+						PlayAnimation ();
+
 						_activeItem.InteractOn (tile, _level, (int)mousePosition.x, (int)mousePosition.y, this);
 						return;
 					}
 				}
-				else if (_activeItem is Seed)
+				else if (_activeItem is PlantableResource)
 				{
+					PlayAnimation ();
+
 					_activeItem.InteractOn (tile, _level, (int)mousePosition.x, (int)mousePosition.y, this);
 					return;
 				}
@@ -133,6 +145,10 @@ public class Player : Mob
 		else if (Input.GetKeyDown (KeyCode.Alpha4))
 		{
 			SetActiveItem (ItemDatabase.GetItemFromID (ItemDatabase.items[3].ID));
+		}
+		else if (Input.GetKeyDown (KeyCode.Alpha5))
+		{
+			SetActiveItem (ItemDatabase.GetItemFromID (ItemDatabase.items[4].ID));
 		}
 	}
 }
