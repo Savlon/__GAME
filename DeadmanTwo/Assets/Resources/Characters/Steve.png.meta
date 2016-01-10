@@ -1,12 +1,15 @@
 fileFormatVersion: 2
 guid: d1247df39d59e491cb608e1bcddb6adb
-timeCreated: 1452071594
+timeCreated: 1452415426
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: Steve_0
     21300002: Steve_1
     21300004: Steve_2
+    21300006: Steve_3
+    21300008: Steve_4
+    21300010: Steve_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -78,6 +81,36 @@ TextureImporter:
         serializedVersion: 2
         x: 64
         y: 160
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: .5, y: .326526195}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Steve_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: .5, y: .326526195}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Steve_4
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: .5, y: .326526195}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Steve_5
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
         width: 32
         height: 32
       alignment: 9

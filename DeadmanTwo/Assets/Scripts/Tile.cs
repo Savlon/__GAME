@@ -58,7 +58,10 @@ public class Tile
 	{	}
 
 	public virtual void StepOn (Level level, int x, int y, Entity source)
-	{ source.Speed = source.NormalSpeed; }
+	{ 
+		source.GetComponent <Animator> ().SetBool ("Swim", false);
+		source.Speed = source.NormalSpeed;
+	}
 
 	public virtual bool Interact (Level Level, int x, int y, Player player, Item item)
 	{ return false; }

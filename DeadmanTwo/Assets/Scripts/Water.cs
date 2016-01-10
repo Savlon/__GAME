@@ -51,6 +51,7 @@ public class Water : Tile
 
 	public override void StepOn (Level level, int x, int y, Entity source)
 	{
+		source.GetComponent <Animator> ().SetBool ("Swim", true);
 		source.Speed = source.NormalSpeed * 0.3f;
 	}
 }
