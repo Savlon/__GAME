@@ -20,6 +20,9 @@ public class PlantableResource : Item
 	{
 		if (_targetTiles.Count == 0 && _resultTile != null)
 		{
+			if (!_resultTile.Passable && Utils.IsSamePosition (new Vector2 (player.Position.x, player.Position.y), new Vector2 (x, y)))
+				return false;
+
 			level.SetTile (x, y, _resultTile, 0);
 			return true;
 		}
@@ -27,6 +30,9 @@ public class PlantableResource : Item
 		{
 			if (_targetTiles.Contains (tile))
 			{
+				if (!_resultTile.Passable && Utils.IsSamePosition (new Vector2 (player.Position.x, player.Position.y), new Vector2 (x, y)))
+					return false;
+
 				level.SetTile (x, y, _resultTile, 0); //possibly change data value to be the id of the seed?
 				return true;
 			}
