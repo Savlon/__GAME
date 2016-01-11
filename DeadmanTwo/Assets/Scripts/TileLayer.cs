@@ -27,7 +27,7 @@ public class TileLayer
 
 	public byte GetTileID (int x, int y)
 	{
-		if (x < 0 || y < 0 || x >= _width || y >= _height) return TileDatabase.ROCK.ID;
+		if (x < 0 || y < 0 || x >= _width || y >= _height) return TileDatabase.ROCK_WALL.ID;
 
 		return _tiles[x, y];
 	}

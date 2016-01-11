@@ -11,18 +11,9 @@ public class Sand : Tile
 	private Sprite overlaySprite;
 
 
-	public Sand (int id, Vector3 position = new Vector3 (), bool passable = true) : base (id, position, passable)
+	public Sand (int id, bool passable = true, bool isBaseTile = true) : base (id, passable, isBaseTile)
 	{
-//		images = new Sprite[16];
-//
-//		blueprints = new Sprite[16];
-//		blueprints = Resources.LoadAll <Sprite> ("Blueprint/");
-//		blueprints = blueprints.OrderBy (s => int.Parse (s.name)).ToArray ();
-//
-//		baseSprite = Resources.Load <Sprite> ("Dirt");
-//		overlaySprite = Resources.Load <Sprite> ("Sand");
-//
-//		images = SpriteMerger.CombineSpritesUsingBlueprintArray (blueprints, baseSprite, overlaySprite);
+
 	}
 
 

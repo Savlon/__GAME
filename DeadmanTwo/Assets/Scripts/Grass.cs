@@ -14,7 +14,7 @@ public class Grass : Tile
 
 	private Dictionary <int, Sprite> imagesDictionary;
 
-	public Grass (int id, Vector3 position = new Vector3 (), bool passable = true) : base (id, position, passable)
+	public Grass (int id, bool passable = true, bool isBaseTile = true) : base (id, passable, isBaseTile)
 	{
 
 	}

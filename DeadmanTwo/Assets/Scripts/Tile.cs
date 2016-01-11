@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class Tile 
 {
 	private byte _id;
-	private Vector3 _position;
 	private bool _passable;
 	private bool _isBaseTile;
 	private Sprite _image;
@@ -15,10 +14,9 @@ public class Tile
 	private int[] _spriteIndexValues;
 	private Dictionary <int, Sprite> _tilesetSprites;
 
-	public Tile (int id, Vector3 position = new Vector3 (), bool passable = true, bool isBaseTile = true)
+	public Tile (int id, bool passable = true, bool isBaseTile = true)
 	{
 		_id = (byte)id;
-		_position = position;
 		_passable = passable;
 		_isBaseTile = isBaseTile;
 
@@ -45,7 +43,6 @@ public class Tile
 	public Tile (Tile tileClone, Vector3 position)
 	{
 		_id = tileClone._id;
-		_position = position;
 		_passable = tileClone._passable;
 		_isBaseTile = tileClone._isBaseTile;
 		_image = tileClone._image;
@@ -117,12 +114,6 @@ public class Tile
 		set {_id = value;}
 	}
 
-	public Vector3 Position
-	{
-		get {return _position;}
-		set {_position = value;}
-	}
-
 	public bool Passable
 	{
 		get {return _passable;}
@@ -148,17 +139,17 @@ public class Tile
 
 		Tile tile = (Tile)obj;
 
-		return (_id == tile.ID) && (Position == tile.Position);
+		return (_id == tile.ID);
 	}
 
 	public override int GetHashCode ()
 	{
-		return _id.GetHashCode () ^ Position.GetHashCode ();
+		return _id.GetHashCode () ^ _id.GetHashCode ();
 	}
 
 	public override string ToString ()
 	{
-		return string.Format ("[Tile: ID={0}, Position={1}, Passable={2}, IsBaseTile={3}, Image={4}]", ID, Position, Passable, IsBaseTile, Image);
+		return string.Format ("[Tile: ID={0}, Passable={1}, IsBaseTile={2}, Image={3}]", ID, Passable, IsBaseTile, Image);
 	}
 
 	private void SetupTileReferences ()

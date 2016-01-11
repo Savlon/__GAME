@@ -79,7 +79,11 @@ public class Player : Mob
 
 						PlayAnimation ();
 
-						_activeItem.InteractOn (tile, _level, (int)mousePosition.x, (int)mousePosition.y, this);
+						if (_activeItem.InteractOn (tile, _level, (int)mousePosition.x, (int)mousePosition.y, this))
+							return;
+						else
+							_level.GetTile ((int)mousePosition.x, (int)mousePosition.y).Interact (_level, (int)mousePosition.x, (int)mousePosition.y, this, _activeItem);
+
 						return;
 					}
 				}

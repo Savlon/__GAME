@@ -10,7 +10,7 @@ public class Water : Tile
 	private Sprite baseSprite;
 	private Sprite overlaySprite;
 
-	public Water (int id, Vector3 position = new Vector3 (), bool passable = true) : base (id, position, passable)
+	public Water (int id, bool passable = true, bool isBaseTile = true) : base (id, passable, isBaseTile)
 	{
 
 	}

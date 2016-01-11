@@ -40,24 +40,26 @@ public class Instrument : Item
 		return false;
 	}
 
+	/// TODO: REMOVE THIS METHOD FROM EACH INSTRUMENT - NOT NEEDED, BETTER TO HANDLE
+	/// EACH INTERACTION INSIDE OF EACH TILE INSTEAD. ALLOWS MORE FLEXIBILITY
 	public override bool InteractOn (Tile tile, Level level, int x, int y, Player player)
 	{
-		if (_targetTiles != null && _resultTile != null)
-		{
-			//TODO: FIX LOGIC FOR CHECKING WITHIN A RADIUS OF THE PLAYER
-			if (Vector3.Distance (player.Position, new Vector3 (x, y, 0)) <= _interactiveDistance)
-			{
-				if (_targetTiles.Contains (tile))
-				{
-					level.SetTile (x, y, TileDatabase.Clone (_resultTile, new Vector3 (x, y, 0)), 0);
-					return true;
-				}
-			}
-			else
-			{
-				Debug.Log ("Out of range");
-			}
-		}
+//		if (_targetTiles != null && _resultTile != null)
+//		{
+//			//TODO: FIX LOGIC FOR CHECKING WITHIN A RADIUS OF THE PLAYER
+//			if (Vector3.Distance (player.Position, new Vector3 (x, y, 0)) <= _interactiveDistance)
+//			{
+//				if (_targetTiles.Contains (tile))
+//				{
+//					level.SetTile (x, y, TileDatabase.Clone (_resultTile, new Vector3 (x, y, 0)), 0);
+//					return true;
+//				}
+//			}
+//			else
+//			{
+//				Debug.Log ("Out of range");
+//			}
+//		}
 		return false;
 	}
 

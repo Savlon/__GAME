@@ -76,8 +76,8 @@ public class Level : MonoBehaviour
 	{
 		if (Input.GetKeyDown (KeyCode.Space))
 		{
-			SetTile (1, 1, TileDatabase.ROCK, 0);
-			SetTile (1, 2, TileDatabase.ROCK, 0);
+			SetTile (1, 1, TileDatabase.ROCK_WALL, 0);
+			SetTile (1, 2, TileDatabase.ROCK_WALL, 0);
 
 			Debug.Log ("Tile At 1, 1 " + GetTileOnLayer (1f, 1f, 0).ID );
 			Debug.Log ("Tile At 1, 1 " + GetTileOnLayer (1f, 1f, 1).ID );
@@ -204,7 +204,7 @@ public class Level : MonoBehaviour
 		int xPos = Mathf.FloorToInt (x);
 		int yPos = Mathf.FloorToInt (y);
 		
-		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return TileDatabase.ROCK;
+		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return TileDatabase.ROCK_WALL;
 
 		int index = _tileLayers[layerIndex].GetTileID (xPos, yPos);
 
@@ -218,7 +218,7 @@ public class Level : MonoBehaviour
 		int xPos = Mathf.FloorToInt (x);
 		int yPos = Mathf.FloorToInt (y);
 
-		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return TileDatabase.ROCK;
+		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return TileDatabase.ROCK_WALL;
 
 		int tId = GetTileOnLayer (xPos, yPos, 0).ID;
 
