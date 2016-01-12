@@ -40,14 +40,6 @@ public class Tile
 
 	}
 
-	public Tile (Tile tileClone, Vector3 position)
-	{
-		_id = tileClone._id;
-		_passable = tileClone._passable;
-		_isBaseTile = tileClone._isBaseTile;
-		_image = tileClone._image;
-	}
-
 	public virtual void AdjustHealth (Level level, int x, int y, Mob source, int amount, Direction direction)
 	{	}
 
@@ -60,8 +52,38 @@ public class Tile
 		source.Speed = source.NormalSpeed;
 	}
 
-	public virtual bool Interact (Level Level, int x, int y, Player player, Item item)
-	{ return false; }
+	//TODO: Add scene entity of desired item in this method for each tile class
+	public virtual bool Interact (Level level, int x, int y, Player player, Item item)
+	{ 
+		if (item is PlantableResource)
+		{
+			PlantableResource plantableResource = (PlantableResource)item;
+			
+			if (plantableResource.TargetTiles.Contains (level.GetTile (x, y)) || plantableResource.TargetTiles.Count == 0)
+			{
+				if (!plantableResource.ResultTile.Passable && Utils.IsSamePosition ((Vector2)player.Position, new Vector2 (x, y)))
+					return false;
+				
+				level.SetTile (x, y, plantableResource.ResultTile, 0); //Add delay timer for plantable resource for time it takes plant to grow if any
+				return true;		
+			}
+		}
+
+//		if (item is PlantableResource)
+//		{
+//			PlantableResource plantableResource = (PlantableResource)item;
+//
+//			if (plantableResource.TargetTiles.Count == 0)
+//			{
+//				if (!plantableResource.ResultTile.Passable && Utils.IsSamePosition ((Vector2)player.Position, new Vector2 (x, y)))
+//					return false;
+//
+//				level.SetTile (x, y, plantableResource.ResultTile, 0);
+//				return true;
+//			}
+//		}
+		return false; 
+	}
 
 	public virtual void Update (Level level, int x , int y)
 	{	}

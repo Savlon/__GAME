@@ -62,7 +62,7 @@ public class Level : MonoBehaviour
 			for (int x = 0; x < _baseLayer.Width; x++)
 			{
 //				SetTile ((float)x, (float)y, TileDatabase.Clone (TileDatabase.GRASS, new Vector3 (x, y, level)), 0);
-				SetTileOnLayer ((float)x, (float)y, TileDatabase.Clone (TileDatabase.GRASS, new Vector3 (x, y, 0)), 0, 0);
+				SetTileOnLayer ((float)x, (float)y, TileDatabase.GRASS, 0, 0);
 			}
 		}
 	}

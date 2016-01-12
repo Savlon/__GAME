@@ -26,7 +26,7 @@ public class Water : Tile
 
 				if (level.GetTile ((float)x + xx, (float)y + yy) == TileDatabase.HOLE)
 				{
-					level.SetTile ((float)x + xx, (float)y + yy, TileDatabase.Clone (TileDatabase.WATER, new Vector3 (x + xx, y + yy, 0)), 0);
+					level.SetTile ((float)x + xx, (float)y + yy, TileDatabase.WATER, 0);
 				}
 			}
 		}

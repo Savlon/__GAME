@@ -10,7 +10,20 @@ public class Dirt : Tile
 //		Image = Resources.Load <Sprite> ("Dirt");
 	}
 
+	public override bool Interact (Level level, int x, int y, Player player, Item item)
+	{
+		if (item is Instrument)
+		{
+			Instrument instrument = (Instrument)item;
 
+			if (instrument.Type == InstrumentType.HOE)
+			{
+				Debug.Log ("HOE =<> Dirt Tile --> Farming Tile");
+				return true;
+			}
+		}
+		return base.Interact (level, x, y, player, item);
+	}
 
 }
 

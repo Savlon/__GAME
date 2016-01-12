@@ -5,14 +5,6 @@ using System.Collections.Generic;
 
 public class Grass : Tile
 {
-	private Sprite[] images;
-	private Sprite[] blueprints;
-	
-	private Sprite baseSprite;
-	private Sprite overlaySprite;
-
-
-	private Dictionary <int, Sprite> imagesDictionary;
 
 	public Grass (int id, bool passable = true, bool isBaseTile = true) : base (id, passable, isBaseTile)
 	{
@@ -44,11 +36,17 @@ public class Grass : Tile
 //		base.StepOn (level, x, y, source);
 //	}
 
-	public override bool Interact (Level Level, int x, int y, Player player, Item item)
+	public override bool Interact (Level level, int x, int y, Player player, Item item)
 	{
-		if (item != null)
-			return true;
-
-		return false;
+		if (item is Instrument)
+		{
+			Instrument instrument = (Instrument)item;
+			if (instrument.Type == InstrumentType.SHOVEL)
+			{
+				level.SetTile (x, y, TileDatabase.DIRT, 0);
+				return true;
+			}
+		}
+		return base.Interact (level, x, y, player, item);
 	}
 }

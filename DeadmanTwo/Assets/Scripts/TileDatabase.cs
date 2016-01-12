@@ -20,13 +20,7 @@ public static class TileDatabase
 
 
 	private static Dictionary <int, Sprite[]> tilesetDatabase = new Dictionary<int, Sprite[]> ();
-
-
-
-	public static Tile Clone (Tile type, Vector3 position)
-	{
-		return new Tile (type, position);
-	}
+	
 
 	public static void LoadTilesetSprites (int id)
 	{

@@ -52,6 +52,11 @@ public class Player : Mob
 			{
 				timer = _activeItem.Delay;
 
+				if (!_activeItem.InteractOn (tile, _level, (int)mousePosition.x, (int)mousePosition.y, this))
+					if (_level.GetTile ((int)mousePosition.x, (int)mousePosition.y).Interact (_level, (int)mousePosition.x, (int)mousePosition.y, this, _activeItem))
+						return;
+
+				//TODO: CLEAN THIS JUNK UP
 				if (_activeItem is Food)
 				{
 					PlayAnimation ();
@@ -59,41 +64,41 @@ public class Player : Mob
 					_activeItem.Use (this);
 					return;
 				}
-				else if (_activeItem is Instrument)
-				{
-					List<Entity> entities = _level.GetEntitiesInArea ((int)mousePosition.x, (int)mousePosition.y, (int)mousePosition.y, (int)mousePosition.x);
-					//TODO: Shoot raycast to see if mouse clicked on entity and not self
-					//TODO: this is to decide whether to interact with tile or entity
-					if (entities.Count > 0)
-					{
-						PlayAnimation ();
-
-						_activeItem.Interact (this, entities[0]);
-						return;
-					}
-					else
-					{
-						Vector2 myTilePos = Utils.FloorVector2 (Position.x, Position.y);
-
-						if (selectedTilePos == myTilePos && !tile.IsBaseTile) return;
-
-						PlayAnimation ();
-
-						if (_activeItem.InteractOn (tile, _level, (int)mousePosition.x, (int)mousePosition.y, this))
-							return;
-						else
-							_level.GetTile ((int)mousePosition.x, (int)mousePosition.y).Interact (_level, (int)mousePosition.x, (int)mousePosition.y, this, _activeItem);
-
-						return;
-					}
-				}
-				else if (_activeItem is PlantableResource)
-				{
-					PlayAnimation ();
-
-					_activeItem.InteractOn (tile, _level, (int)mousePosition.x, (int)mousePosition.y, this);
-					return;
-				}
+//				else if (_activeItem is Instrument)
+//				{
+//					List<Entity> entities = _level.GetEntitiesInArea ((int)mousePosition.x, (int)mousePosition.y, (int)mousePosition.y, (int)mousePosition.x);
+//					//TODO: Shoot raycast to see if mouse clicked on entity and not self
+//					//TODO: this is to decide whether to interact with tile or entity
+//					if (entities.Count > 0)
+//					{
+//						PlayAnimation ();
+//
+//						_activeItem.Interact (this, entities[0]);
+//						return;
+//					}
+//					else
+//					{
+//						Vector2 myTilePos = Utils.FloorVector2 (Position.x, Position.y);
+//
+//						if (selectedTilePos == myTilePos && !tile.IsBaseTile) return;
+//
+//						PlayAnimation ();
+//
+//						if (_activeItem.InteractOn (tile, _level, (int)mousePosition.x, (int)mousePosition.y, this))
+//							return;
+//						else
+//							_level.GetTile ((int)mousePosition.x, (int)mousePosition.y).Interact (_level, (int)mousePosition.x, (int)mousePosition.y, this, _activeItem);
+//
+//						return;
+//					}
+//				}
+//				else if (_activeItem is PlantableResource)
+//				{
+//					PlayAnimation ();
+//
+//					_activeItem.InteractOn (tile, _level, (int)mousePosition.x, (int)mousePosition.y, this);
+//					return;
+//				}
 
 			}
 		}

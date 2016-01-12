@@ -11,8 +11,8 @@ public static class ItemDatabase
 	public static Item PEAR = new Food (1, "Pear", "Mmmm tasty...", 2.0f, 4);
 
 	// PLANTABLE
-	public static Item TREE_SEED = new PlantableResource (2, "Tree Seed", "Grows into tree.", 2.0f, TileDatabase.HOLE, TileDatabase.DIRT);
-	public static Item GRASS_PATCH = new PlantableResource (4, "Grass Patch", "It's a patch of grass.", 2.0f, TileDatabase.GRASS, TileDatabase.DIRT);
+	public static Item TREE_SEED = new PlantableResource (2, "Tree Seed", "Grows into tree.", 2.0f, TileDatabase.SAND, TileDatabase.DIRT);
+	public static Item GRASS_PATCH = new PlantableResource (4, "Grass Patch", "It's a patch of grass.", 2.0f, TileDatabase.WATER, TileDatabase.DIRT);
 	public static Item WATER_BUCKET = new PlantableResource (5, "Bucket of Water", "Don't drown!", 2.0f, TileDatabase.WATER, TileDatabase.HOLE);
 	public static Item ROCK_WALL = new PlantableResource (7, "Rock Wall", "Keeps every cunt out...", 2.0f, TileDatabase.ROCK_WALL, null);
 
