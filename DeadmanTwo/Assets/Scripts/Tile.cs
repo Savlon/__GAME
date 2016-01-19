@@ -14,6 +14,8 @@ public class Tile
 	private int[] _spriteIndexValues;
 	private Dictionary <int, Sprite> _tilesetSprites;
 
+	public List<byte> canJoinTo = new List<byte> ();
+
 	public Tile (int id, bool passable = true, bool isBaseTile = true)
 	{
 		_id = (byte)id;
@@ -61,27 +63,14 @@ public class Tile
 			
 			if (plantableResource.TargetTiles.Contains (level.GetTile (x, y)) || plantableResource.TargetTiles.Count == 0)
 			{
-				if (!plantableResource.ResultTile.Passable && Utils.IsSamePosition ((Vector2)player.Position, new Vector2 (x, y)))
+				if (!plantableResource.ResultTile.Passable && Utils.IsSamePosition ((Vector2)player.Position, new Vector2 (x, y)) ||
+				    level.GetEntitiesInArea (x, y, y, x).Count > 0)
 					return false;
 				
 				level.SetTile (x, y, plantableResource.ResultTile, 0); //Add delay timer for plantable resource for time it takes plant to grow if any
 				return true;		
 			}
 		}
-
-//		if (item is PlantableResource)
-//		{
-//			PlantableResource plantableResource = (PlantableResource)item;
-//
-//			if (plantableResource.TargetTiles.Count == 0)
-//			{
-//				if (!plantableResource.ResultTile.Passable && Utils.IsSamePosition ((Vector2)player.Position, new Vector2 (x, y)))
-//					return false;
-//
-//				level.SetTile (x, y, plantableResource.ResultTile, 0);
-//				return true;
-//			}
-//		}
 		return false; 
 	}
 
@@ -90,27 +79,65 @@ public class Tile
 	
 	public virtual void UpdateImage (Level level, int x, int y)
 	{
-//		bool check = level.GetTileOnLayer ((float)x, (float)y, _isBaseTile ? 0 : 1).ID != ID;
 		bool up = level.GetTileOnLayer ((float)x, (float)y + 1, _isBaseTile ? 0 : 1).ID != ID;
 		bool down = level.GetTileOnLayer ((float)x, (float)y - 1, _isBaseTile ? 0 : 1).ID != ID;
 		bool left = level.GetTileOnLayer ((float)x - 1, (float)y, _isBaseTile ? 0 : 1).ID != ID;
 		bool right = level.GetTileOnLayer ((float)x + 1, (float)y, _isBaseTile ? 0 : 1).ID != ID;
-		
+
 		bool upLeft = level.GetTileOnLayer ((float)x - 1, (float)y + 1, _isBaseTile ? 0 : 1).ID != ID;
 		bool upRight = level.GetTileOnLayer ((float)x + 1, (float)y + 1, _isBaseTile ? 0 : 1).ID != ID;
 		bool downLeft = level.GetTileOnLayer ((float)x - 1, (float)y - 1, _isBaseTile ? 0 : 1).ID != ID;
 		bool downRight = level.GetTileOnLayer ((float)x + 1, (float)y - 1, _isBaseTile ? 0 : 1).ID != ID;
 
-//		bool up = level.GetTile ((float)x, (float)y + 1).ID != ID;
-//		bool down = level.GetTile ((float)x, (float)y - 1).ID != ID;
-//		bool left = level.GetTile ((float)x - 1, (float)y).ID != ID;
-//		bool right = level.GetTile ((float)x + 1, (float)y).ID != ID;
-//		
-//		bool upLeft = level.GetTile ((float)x - 1, (float)y + 1).ID != ID;
-//		bool upRight = level.GetTile ((float)x + 1, (float)y + 1).ID != ID;
-//		bool downLeft = level.GetTile ((float)x - 1, (float)y - 1).ID != ID;
-//		bool downRight = level.GetTile ((float)x + 1, (float)y - 1).ID != ID;
-		
+		if (up)
+		{
+			if (level.GetTileOnLayer ((float)x, (float)y + 1, _isBaseTile ? 0 : 1).canJoinTo.Contains (ID))
+				up = !up;
+		}
+
+		if (down)
+		{
+			if (level.GetTileOnLayer ((float)x, (float)y - 1, _isBaseTile ? 0 : 1).canJoinTo.Contains (ID))
+				down = !down;
+		}
+
+		if (left)
+		{
+			if (level.GetTileOnLayer ((float)x - 1, (float)y, _isBaseTile ? 0 : 1).canJoinTo.Contains (ID))
+				left = !left;
+		}
+
+		if (right)
+		{
+			if (level.GetTileOnLayer ((float)x + 1, (float)y, _isBaseTile ? 0 : 1).canJoinTo.Contains (ID))
+				right = !right;
+		}
+
+		if (upLeft)
+		{
+			if (level.GetTileOnLayer ((float)x - 1, (float)y + 1, _isBaseTile ? 0 : 1).canJoinTo.Contains (ID))
+				upLeft = !upLeft;
+		}
+
+		if (upRight)
+		{
+			if (level.GetTileOnLayer ((float)x + 1, (float)y + 1, _isBaseTile ? 0 : 1).canJoinTo.Contains (ID))
+				upRight = !upRight;
+		}
+
+		if (downLeft)
+		{
+			if (level.GetTileOnLayer ((float)x - 1, (float)y - 1, _isBaseTile ? 0 : 1).canJoinTo.Contains (ID))
+				downLeft = !downLeft;
+		}
+
+		if (downRight)
+		{
+			if (level.GetTileOnLayer ((float)x + 1, (float)y - 1, _isBaseTile ? 0 : 1).canJoinTo.Contains (ID))
+				downRight = !downRight;
+		}
+
+
 		int index = 0;
 		int n = !up ? 1 : 0;
 		int ne = !upRight ? 2 : 0;

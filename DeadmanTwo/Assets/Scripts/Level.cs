@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TinkerWorX.AccidentalNoiseLibrary;
 
 public class Level : MonoBehaviour 
 {
@@ -9,22 +10,21 @@ public class Level : MonoBehaviour
 	public GameObject referenceTilePrefab;
 	public int level;
 	//TEST
-
 	private int width = 100;
 	private int height = 100;
 
 	private List <Entity> _entitiesInGame;
 	private List <Entity>[,] _entitiesInTiles;
 
-//	private byte[,] _tiles;
-//	private byte[,] _data;
-//
-//	private GameObject[,] _tileObjects;
-
 	private TileLayer[] _tileLayers;
 
 	private TileLayer _baseLayer;
 	private TileLayer _overlayLayer;
+
+
+	private ImplicitFractal heightMap;
+	private MapData heightData;
+	private Generator mapGenerator;
 
 	void Start () 
 	{
@@ -38,35 +38,39 @@ public class Level : MonoBehaviour
 		_tileLayers[0] = _baseLayer;
 		_tileLayers[1] = _overlayLayer;
 
+		mapGenerator = GetComponent <Generator> ();
+		mapGenerator.LoadGenerationData (width, height);
+
+
 		_entitiesInTiles = new List<Entity>[width, height];
 		for (int x = 0; x < _entitiesInTiles.GetLength (0); x++)
 			for (int y = 0; y < _entitiesInTiles.GetLength (1); y++)
 				_entitiesInTiles[x, y] = new List<Entity> ();
 
 
-//		for (int y = 0; y < _baseLayer.Height; y++)
-//		{
-//			for (int x = 0; x < _baseLayer.Width; x++)
-//			{
-//				if (_baseLayer.GetTileGameObject (x, y) == null)
-//				{
-//					GameObject tile = Instantiate (referenceTilePrefab, new Vector3 (x, y, level), Quaternion.identity) as GameObject;
-//					_baseLayer.SetTileGameObject (x, y, tile);
-//					tile.transform.SetParent (gameObject.transform, true);
-//				}
-//			}
-//		}
-
 		for (int y = 0; y < _baseLayer.Height; y++)
 		{
 			for (int x = 0; x < _baseLayer.Width; x++)
 			{
-//				SetTile ((float)x, (float)y, TileDatabase.Clone (TileDatabase.GRASS, new Vector3 (x, y, level)), 0);
-				SetTileOnLayer ((float)x, (float)y, TileDatabase.GRASS, 0, 0);
+				float value = mapGenerator.GetData (x, y);
+
+				Tile t = TileDatabase.GRASS;
+
+				if (value < 0.2f)
+					t = TileDatabase.SHALLOW_WATER;
+				else if (value < 0.3f)
+					t = TileDatabase.SAND;
+				else if (value < 0.4f)
+					t = TileDatabase.DIRT;
+				else
+					t = TileDatabase.GRASS;
+
+
+				SetTileOnLayer ((float)x, (float)y, t, 0, 0);
 			}
 		}
 	}
-
+		
 	private float timer;
 
 	private int oldEX;
