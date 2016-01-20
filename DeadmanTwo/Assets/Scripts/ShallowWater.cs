@@ -43,7 +43,7 @@ public class ShallowWater : Tile
 
 	public override void StepOn (Level level, int x, int y, Entity source)
 	{
-		source.GetComponent <Animator> ().SetBool ("Swim", true);
+		source.GetComponent <Animator> ().SetBool ("Mask", true);
 		source.Speed = source.NormalSpeed * 0.3f;
 	}
 }

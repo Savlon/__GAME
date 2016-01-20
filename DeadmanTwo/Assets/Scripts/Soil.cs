@@ -13,7 +13,7 @@ public class Soil : Tile
 		if (item is PlantableResource)
 		{
 			PlantableResource plantableResource = (PlantableResource)item;
-			if (plantableResource.ID == ItemDatabase.WATER_BUCKET.ID)
+			if (plantableResource.ID == ItemDatabase.WATER_BUCKET_ID)
 			{
 				level.SetTileOnLayer (x, y, TileDatabase.FARM, 0, 0);
 				return true;

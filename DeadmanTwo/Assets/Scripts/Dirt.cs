@@ -21,6 +21,11 @@ public class Dirt : Tile
 				Debug.Log ("HOE =<> Dirt Tile --> Farming Tile");
 				return true;
 			}
+			else if (instrument.Type == InstrumentType.SHOVEL)
+			{
+				level.SetTile (x, y, TileDatabase.HOLE, 0);
+				return true;
+			}
 		}
 		return base.Interact (level, x, y, player, item);
 	}

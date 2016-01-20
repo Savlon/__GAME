@@ -5,11 +5,13 @@ using System.Linq;
 
 public class PlantableResource : Item
 {
+	private int _data;
 	private Tile _resultTile;
 	private List<Tile> _targetTiles = new List<Tile> ();
 
-	public PlantableResource (int id, string name, string description, float delay, Tile resultTile, params Tile[] targetTiles) : base (id, name, description, delay)
+	public PlantableResource (int id, string name, string description, float delay, int data, Tile resultTile, params Tile[] targetTiles) : base (id, name, description, delay)
 	{
+		this._data = data;
 		this._resultTile = resultTile;
 
 		if (targetTiles != null)
@@ -38,6 +40,12 @@ public class PlantableResource : Item
 //			}
 //		}
 		return false;
+	}
+
+	public int Data
+	{
+		get {return _data;}
+		private set {_data = value;}
 	}
 
 	public Tile ResultTile

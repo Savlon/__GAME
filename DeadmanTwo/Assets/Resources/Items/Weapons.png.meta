@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 8268efce9c8c34788890cd73781c00b0
-timeCreated: 1452407401
+timeCreated: 1453257965
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -26,7 +26,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -51,7 +51,7 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 32
   alphaIsTransparency: 1
@@ -67,8 +67,17 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 9
-      pivot: {x: .50000006, y: .316410542}
+      pivot: {x: 0.50000006, y: 0.31641054}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -5.000002, y: 16.874863}
+        - {x: -9.000002, y: 12.874863}
+        - {x: -9.000002, y: 1.8748627}
+        - {x: -7.000002, y: -3.1251373}
+        - {x: 3.999998, y: -3.1251373}
+        - {x: 9.999998, y: 2.8748627}
+        - {x: 9.999998, y: 11.874863}
+        - {x: -0.0000019073486, y: 16.874863}
     - name: Weapons_1
       rect:
         serializedVersion: 2
@@ -77,8 +86,18 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 9
-      pivot: {x: .570196033, y: .21921587}
+      pivot: {x: 0.57019603, y: 0.21921587}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 1.753727, y: 18.985092}
+        - {x: -3.246273, y: 18.985092}
+        - {x: -8.246273, y: 9.985092}
+        - {x: -8.246273, y: 2.9850922}
+        - {x: -6.246273, y: -3.0149078}
+        - {x: 5.753727, y: -3.0149078}
+        - {x: 7.753727, y: 2.9850922}
+        - {x: 7.753727, y: 10.985092}
+        - {x: 3.753727, y: 17.985092}
     - name: Weapons_2
       rect:
         serializedVersion: 2
@@ -87,8 +106,18 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 9
-      pivot: {x: .516199112, y: .27321291}
+      pivot: {x: 0.5439658, y: 0.3889079}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 5.593094, y: 11.554947}
+        - {x: -4.406906, y: 11.554947}
+        - {x: -7.406906, y: 5.554947}
+        - {x: -7.406906, y: 0.5549469}
+        - {x: -6.406906, y: -2.445053}
+        - {x: -2.4069061, y: -5.445053}
+        - {x: 3.5930939, y: -5.445053}
+        - {x: 6.593094, y: -3.445053}
+        - {x: 6.593094, y: 10.554947}
     - name: Weapons_3
       rect:
         serializedVersion: 2
@@ -97,8 +126,17 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 9
-      pivot: {x: .415782928, y: .356514454}
+      pivot: {x: 0.41578293, y: 0.35651445}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -11.305054, y: -3.4084625}
+        - {x: -11.305054, y: -11.408463}
+        - {x: -0.3050537, y: -11.408463}
+        - {x: 16.694946, y: 1.5915375}
+        - {x: 16.694946, y: 16.591537}
+        - {x: 4.6949463, y: 16.591537}
+        - {x: 0.6949463, y: 14.591537}
+        - {x: -10.305054, y: -0.40846252}
     - name: Weapons_8
       rect:
         serializedVersion: 2
@@ -107,8 +145,15 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 9, y: 12}
+        - {x: -11, y: 0}
+        - {x: -11, y: -13}
+        - {x: 2, y: -13}
+        - {x: 14, y: 6}
+        - {x: 14, y: 12}
     - name: Weapons_4
       rect:
         serializedVersion: 2
@@ -117,8 +162,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 9
-      pivot: {x: .512301445, y: .272423744}
+      pivot: {x: 0.51230145, y: 0.27242374}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -3.3936462, y: 14.28244}
+        - {x: -8.393646, y: 13.28244}
+        - {x: -10.393646, y: 11.28244}
+        - {x: -10.393646, y: 10.28244}
+        - {x: -7.3936462, y: -5.71756}
+        - {x: -2.3936462, y: -7.71756}
+        - {x: 4.6063538, y: -7.71756}
+        - {x: 8.606354, y: -5.71756}
+        - {x: 9.606354, y: 5.28244}
+        - {x: 9.606354, y: 11.28244}
+        - {x: 2.6063538, y: 14.28244}
     - name: Weapons_5
       rect:
         serializedVersion: 2
@@ -127,8 +184,19 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 9
-      pivot: {x: .540555954, y: .240555763}
+      pivot: {x: 0.54055595, y: 0.24055576}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -6.2977905, y: 18.302216}
+        - {x: -11.297791, y: 14.302216}
+        - {x: -11.297791, y: 9.302216}
+        - {x: -9.297791, y: -3.6977844}
+        - {x: -6.2977905, y: -6.6977844}
+        - {x: 2.7022095, y: -6.6977844}
+        - {x: 9.702209, y: -4.6977844}
+        - {x: 10.702209, y: 1.3022156}
+        - {x: 10.702209, y: 16.302216}
+        - {x: 5.7022095, y: 18.302216}
     - name: Weapons_6
       rect:
         serializedVersion: 2
@@ -137,8 +205,18 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 9
-      pivot: {x: .370237827, y: .335634232}
+      pivot: {x: 0.37023783, y: 0.33563423}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 10.15239, y: 17.259705}
+        - {x: -4.8476105, y: 17.259705}
+        - {x: -5.8476105, y: 15.259705}
+        - {x: -9.84761, y: 5.2597046}
+        - {x: -9.84761, y: -9.740295}
+        - {x: 1.1523895, y: -9.740295}
+        - {x: 13.15239, y: -6.7402954}
+        - {x: 16.15239, y: -3.7402954}
+        - {x: 16.15239, y: 15.259705}
     - name: Weapons_7
       rect:
         serializedVersion: 2
@@ -147,8 +225,15 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 9
-      pivot: {x: .523789883, y: .418433666}
+      pivot: {x: 0.5237899, y: 0.41843367}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9.761276, y: 12.610123}
+        - {x: -9.761276, y: -5.3898773}
+        - {x: 9.238724, y: -5.3898773}
+        - {x: 9.238724, y: 10.610123}
+        - {x: 7.2387238, y: 12.610123}
+    outline: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

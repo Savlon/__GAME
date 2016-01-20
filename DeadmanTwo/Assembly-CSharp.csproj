@@ -89,6 +89,8 @@
      <Compile Include="Assets\External Libs\AccidentalNoiseLibrary-master\NoiseLookupTable.cs" />
      <Compile Include="Assets\External Libs\AccidentalNoiseLibrary-master\Properties\AssemblyInfo.cs" />
      <Compile Include="Assets\External Libs\AccidentalNoiseLibrary-master\Utilities.cs" />
+     <Compile Include="Assets\Scripts\AppleSeedling.cs" />
+     <Compile Include="Assets\Scripts\AppleTree.cs" />
      <Compile Include="Assets\Scripts\Direction.cs" />
      <Compile Include="Assets\Scripts\Dirt.cs" />
      <Compile Include="Assets\Scripts\Entity.cs" />

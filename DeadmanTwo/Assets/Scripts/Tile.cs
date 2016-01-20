@@ -50,7 +50,7 @@ public class Tile
 
 	public virtual void StepOn (Level level, int x, int y, Entity source)
 	{ 
-		source.GetComponent <Animator> ().SetBool ("Swim", false);
+		source.GetComponent <Animator> ().SetBool ("Mask", false);
 		source.Speed = source.NormalSpeed;
 	}
 
@@ -66,8 +66,9 @@ public class Tile
 				if (!plantableResource.ResultTile.Passable && Utils.IsSamePosition ((Vector2)player.Position, new Vector2 (x, y)) ||
 				    level.GetEntitiesInArea (x, y, y, x).Count > 0)
 					return false;
-				
-				level.SetTile (x, y, plantableResource.ResultTile, 0); //Add delay timer for plantable resource for time it takes plant to grow if any
+
+//				Debug.Log ("Plantable Data = " + plantableResource.Data);
+				level.SetTile (x, y, plantableResource.ResultTile, plantableResource.Data); //Add delay timer for plantable resource for time it takes plant to grow if any
 				return true;		
 			}
 		}
@@ -150,8 +151,8 @@ public class Tile
 
 		index = n + ne + e + se + s + sw + w + nw;
 
-
-		_image = _tilesetSprites[_spriteIndexValues[index]];
+		if (_tilesetSprites.Count > 1)
+			_image = _tilesetSprites[_spriteIndexValues[index]];
 
 		level.SetTileOnLayer ((float)x, (float)y, this, level.GetData ((float)x, (float)y), _isBaseTile ? 0 : 1);
 //		level.SetTile ((float)x, (float)y, this, level.GetData ((float)x, (float)y));

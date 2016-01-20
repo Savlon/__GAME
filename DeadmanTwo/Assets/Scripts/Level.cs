@@ -345,6 +345,18 @@ public class Level : MonoBehaviour
 		}
 	}
 
+	public int GetDataOnLayer (float x, float y, int layerIndex)
+	{
+		int xPos = Mathf.FloorToInt (x);
+		int yPos = Mathf.FloorToInt (y);
+
+		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return 0;
+
+		int tData = _tileLayers [layerIndex].GetTileData (xPos, yPos);
+
+		return tData;
+	}
+
 	public int GetData (float x, float y)
 	{
 		int xPos = Mathf.FloorToInt (x);
@@ -352,8 +364,19 @@ public class Level : MonoBehaviour
 		
 		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return 0;
 
-		int tData = _baseLayer.GetTileData (xPos, yPos);
+		int tData = GetDataOnLayer (xPos, yPos, 0);
 
+		for (int layerIndex = _tileLayers.Length - 1; layerIndex >= 0; layerIndex--)
+		{
+			int layerData = GetDataOnLayer (xPos, yPos, layerIndex);
+
+			Tile tile = GetTileOnLayer (xPos, yPos, layerIndex);
+			if (tile.ID != TileDatabase.AIR_ID)
+			{
+				tData = layerData;
+				break;
+			}
+		}
 		return tData & 0xff;
 	}
 
@@ -364,7 +387,12 @@ public class Level : MonoBehaviour
 		
 		if (xPos < 0 || xPos >= width || yPos < 0 || yPos >= height) return;
 
-		_baseLayer.SetTileData (xPos, yPos, (byte)value);
+		Tile tile = GetTile (xPos, yPos);
+
+		if (tile.ID != TileDatabase.AIR_ID && !tile.IsBaseTile)
+			_tileLayers[1].SetTileData (xPos, yPos, (byte)value);
+		else
+			_tileLayers[0].SetTileData (xPos, yPos, (byte)value);
 	}
 
 	public void Add (Entity referenceEntity, int x, int y)

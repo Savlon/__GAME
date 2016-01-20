@@ -44,14 +44,14 @@ public class Mob : Entity
 		
 		if (x > 0f)
 		{
-			float xNext = Mathf.FloorToInt (Position.x + 0.05f);
+			float xNext = Mathf.FloorToInt (Position.x + 0.1f);
 
 			if (!_level.GetTileOnLayer (xNext, Position.y, 1).Passable)
 				x = 0;
 		}
 		else if (x < 0f)
 		{
-			float xNext = Mathf.FloorToInt (Position.x - 0.05f);
+			float xNext = Mathf.FloorToInt (Position.x - 0.1f);
 
 			if (!_level.GetTileOnLayer (xNext, Position.y, 1).Passable)
 				x = 0;
@@ -59,14 +59,14 @@ public class Mob : Entity
 
 		if (y > 0f)
 		{
-			float yNext = Mathf.FloorToInt (Position.y + 0.05f);
+			float yNext = Mathf.FloorToInt (Position.y + 0.1f);
 
 			if (!_level.GetTileOnLayer (Position.x, yNext, 1).Passable)
 				y = 0;
 		}
 		else if (y < 0f)
 		{
-			float yNext = Mathf.FloorToInt (Position.y - 0.05f);
+			float yNext = Mathf.FloorToInt (Position.y - 0.1f);
 
 			if (!_level.GetTileOnLayer (Position.x, yNext, 1).Passable)
 				y = 0;
