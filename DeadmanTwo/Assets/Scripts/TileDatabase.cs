@@ -17,6 +17,8 @@ public static class TileDatabase
 	public static byte SOIL_ID = 6;
 	public static byte APPLE_TREE_ID = 7;
 	public static byte APPLE_SEEDLING_ID = 8;
+	public static byte GRASS_BUSH_ID = 9;
+	public static byte ROCK_ID = 10;
 	public static byte ROCK_WALL_ID = 99;
 	public static byte AIR_ID = 255;
 
@@ -33,6 +35,8 @@ public static class TileDatabase
 	public static Tile HOLE = new Hole (HOLE_ID);
 	public static Tile APPLE_TREE = new AppleTree (APPLE_TREE_ID);
 	public static Tile APPLE_SEEDLING = new Seedling (APPLE_SEEDLING_ID, true, false, TileDatabase.APPLE_TREE);
+	public static Tile GRASS_BUSH = new GrassBush (GRASS_BUSH_ID);
+	public static Tile ROCK = new Rock (ROCK_ID);
 	public static Tile ROCK_WALL = new RockWall (ROCK_WALL_ID, false, false);
 	public static Tile AIR = new Tile (AIR_ID, true, false);
 

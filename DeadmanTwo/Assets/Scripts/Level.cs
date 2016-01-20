@@ -10,8 +10,8 @@ public class Level : MonoBehaviour
 	public GameObject referenceTilePrefab;
 	public int level;
 	//TEST
-	private int width = 100;
-	private int height = 100;
+	private int width = 50;
+	private int height = 50;
 
 	private List <Entity> _entitiesInGame;
 	private List <Entity>[,] _entitiesInTiles;
@@ -66,7 +66,24 @@ public class Level : MonoBehaviour
 					t = TileDatabase.GRASS;
 
 
+
 				SetTileOnLayer ((float)x, (float)y, t, 0, 0);
+
+				if (t.ID != TileDatabase.SHALLOW_WATER_ID)
+				{
+					if (Random.Range (0, 101) <= 5)
+					{
+						SetTile ((float)x, (float)y, TileDatabase.ROCK, 0);
+					}
+				}
+
+				if (t.ID == TileDatabase.GRASS_ID)
+				{
+					if (Random.Range (0, 101) <= 10)
+					{
+						SetTile ((float)x, (float)y, TileDatabase.GRASS_BUSH, 0);
+					}
+				}
 			}
 		}
 	}
@@ -304,7 +321,6 @@ public class Level : MonoBehaviour
 					newTileGO.transform.SetParent (gameObject.transform, true);
 					_tileLayers[1].SetTileGameObject (xPos, yPos, newTileGO);
 				}
-
 				_tileLayers[1].GetTileGameObject (xPos, yPos).GetComponent <SpriteRenderer> ().sprite = tile.Image;
 				_tileLayers[1].SetTileID (xPos, yPos, tile.ID);
 				_tileLayers[1].SetTileData (xPos, yPos, (byte)dataValue);

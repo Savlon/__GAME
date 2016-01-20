@@ -22,7 +22,7 @@ public static class ItemDatabase
 	public static Item APPLE_SEED = new PlantableResource (APPLE_SEED_ID, "Apple Seed", "Grows into an Apple tree.", 2.0f, 100, TileDatabase.APPLE_SEEDLING, TileDatabase.FARM);
 	public static Item GRASS_PATCH = new PlantableResource (GRASS_PATCH_ID, "Grass Patch", "It's a patch of grass.", 2.0f, 0, TileDatabase.SOIL, TileDatabase.DIRT);
 	public static Item WATER_BUCKET = new PlantableResource (WATER_BUCKET_ID, "Bucket of Water", "Don't drown!", 2.0f, 0, TileDatabase.SHALLOW_WATER, TileDatabase.HOLE);
-	public static Item ROCK_WALL = new PlantableResource (ROCK_WALL_ID, "Rock Wall", "Keeps every cunt out...", 2.0f, 0, TileDatabase.ROCK_WALL, null);
+	public static Item ROCK_WALL = new PlantableResource (ROCK_WALL_ID, "Rock Wall", "Keeps every cunt out...", 2.0f, 0, TileDatabase.ROCK_WALL, TileDatabase.GRASS, TileDatabase.DIRT, TileDatabase.SAND);
 
 	// INSTRUMENTS
 	public static Item SHOVEL = new Instrument (SHOVEL_ID, "Shovel", "I'm gonna dig me a hole.", 0.7f, InstrumentType.SHOVEL, 30, 4, TileDatabase.DIRT, TileDatabase.GRASS, TileDatabase.SAND);
