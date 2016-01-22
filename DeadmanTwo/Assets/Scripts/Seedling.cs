@@ -36,7 +36,7 @@ public class Seedling : Tile
 				level.SetTile (x, y, TileDatabase.AIR, 0);
 			}
 		}
-
+		base.StepOn (level, x, y, source);
 	}
 
 

@@ -19,7 +19,6 @@ public class RockWall : Tile
 			if (instrument.Type == InstrumentType.PICKAXE)
 			{
 				level.SetTile (x, y, TileDatabase.AIR, 0);
-				Debug.Log ("Create object in scene");
 				return true;
 			}
 		}

@@ -60,7 +60,7 @@ public class Entity : MonoBehaviour
 				_knockbackY--;
 			else if (_knockbackY < 0)
 				_knockbackY++;
-
+			Debug.Log ("KnockBack = " + gameObject.name);
 		}
 
 		if (Health <= 0)

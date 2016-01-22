@@ -52,6 +52,8 @@ public class Player : Mob
 			{
 				timer = _activeItem.Delay;
 
+				PlayAnimation (); //FIXME: Fix this junk
+
 				if (!_activeItem.InteractOn (tile, _level, (int)mousePosition.x, (int)mousePosition.y, this))
 					if (_level.GetTile ((int)mousePosition.x, (int)mousePosition.y).Interact (_level, (int)mousePosition.x, (int)mousePosition.y, this, _activeItem))
 						return;
@@ -59,7 +61,7 @@ public class Player : Mob
 				//TODO: CLEAN THIS JUNK UP
 				if (_activeItem is Food)
 				{
-					PlayAnimation ();
+					//PlayAnimation ();
 
 					_activeItem.Use (this);
 					return;
