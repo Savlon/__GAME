@@ -113,12 +113,7 @@ public class Level : MonoBehaviour
 //				}
 //			}
 		}
-
-		if (Input.GetKeyDown (KeyCode.Y))
-		{
-			SetTile (1, 1, TileDatabase.AIR, 0);
-		}
-
+			
 //		if (Input.GetKeyDown (KeyCode.Space))
 //		{
 //			for (int y = 0; y < _tiles.GetLength (1); y++)
